@@ -1,32 +1,18 @@
-var MetaCoin = artifacts.require("./MetaCoin.sol");
-
-contract('MetaCoin', function(accounts) {
+var VegaCampaignFactory = artifacts.require("VegaCampaignFactory");
+var MiniMeToken = artifacts.require("../node_modules/minimetoken/contracts/MiniMeToken.sol");
+contract('VegaCampaignFactory', function(accounts) {
   it("should put 10000 MetaCoin in the first account", function() {
-    return MetaCoin.deployed().then(function(instance) {
-      return instance.getBalance.call(accounts[0]);
+    return VegaCampaignFactory.deployed().then(function(instance) {
+      console.log(instance.address);
+      console.log("balance: " + web3.eth.getBalance(instance.address));      
+      console.log("balance: " + web3.eth.getBalance(accounts[8]));      
+      web3.eth.sendTransaction({ from: accounts[8], to: instance.address, value: 100 })
+      //return MiniMeToken.at("0x3d68221571b94075b34396ab49ff0bc2217c65ec6129dbabd281485c306c3871").balanceOfAt(accounts[8], web3.eth.getBlock("latest"))
     }).then(function(balance) {
-      assert.equal(balance.valueOf(), 10000, "10000 wasn't in the first account");
     });
   });
-  it("should call a function that depends on a linked library", function() {
-    var meta;
-    var metaCoinBalance;
-    var metaCoinEthBalance;
-
-    return MetaCoin.deployed().then(function(instance) {
-      meta = instance;
-      return meta.getBalance.call(accounts[0]);
-    }).then(function(outCoinBalance) {
-      metaCoinBalance = outCoinBalance.toNumber();
-      return meta.getBalanceInEth.call(accounts[0]);
-    }).then(function(outCoinBalanceEth) {
-      metaCoinEthBalance = outCoinBalanceEth.toNumber();
-    }).then(function() {
-      assert.equal(metaCoinEthBalance, 2 * metaCoinBalance, "Library function returned unexpected function, linkage may be broken");
-    });
-  });
-  it("should send coin correctly", function() {
-    var meta;
+  /*it("should send coin correctly", function() {
+    var meta; 
 
     // Get initial balances of first and second account.
     var account_one = accounts[0];
@@ -39,7 +25,7 @@ contract('MetaCoin', function(accounts) {
 
     var amount = 10;
 
-    return MetaCoin.deployed().then(function(instance) {
+    return VegaCampaignFactory.deployed().then(function(instance) {
       meta = instance;
       return meta.getBalance.call(account_one);
     }).then(function(balance) {
@@ -59,5 +45,5 @@ contract('MetaCoin', function(accounts) {
       assert.equal(account_one_ending_balance, account_one_starting_balance - amount, "Amount wasn't correctly taken from the sender");
       assert.equal(account_two_ending_balance, account_two_starting_balance + amount, "Amount wasn't correctly sent to the receiver");
     });
-  });
+  });*/
 });

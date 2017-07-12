@@ -1,0 +1,35 @@
+{
+  "name": "vega-contracts",
+  "version": "0.0.1",
+  "description": "Core contracts needed to run Vega Fund token and network.",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VegaProject/vega-contracts.git"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "truffle",
+    "ether",
+    "funding",
+    "prediction-market"
+  ],
+  "author": "George K. Van Hoomissen & Arthur Lunn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VegaProject/vega-contracts/issues"
+  },
+  "homepage": "https://github.com/VegaProject/vega-contracts#readme",
+  "dependencies": {
+    "async": "^2.1.4",    
+    "ethconnector": "0.0.24",    
+    "zeppelin-solidity": "1.0.1",
+    "minimetoken": "^0.1.4"    
+  }
+}
