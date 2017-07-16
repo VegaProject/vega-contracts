@@ -91,8 +91,8 @@ contract VegaCampaignFactory is TokenController, Owned {
         startFundingTime = _startFundingTime;
         endFundingTime = _endFundingTime;
         maximumFunding = _maximumFunding;
-        tokenContract = MiniMeToken(_tokenAddress);// The Deployed Token Contract
         vaultAddress = _vaultAddress;
+        tokenContract = MiniMeToken(_tokenAddress);// The Deployed Token Contract
     }
 
 /// @dev The fallback function is called when ether is sent to the contract, it
@@ -164,12 +164,12 @@ contract VegaCampaignFactory is TokenController, Owned {
         if (!vaultAddress.send(msg.value)) {
             throw;
         }
-/*
+
 // Creates an equal amount of tokens as ether sent. The new tokens are created
 //  in the `_owner` address
         if (!tokenContract.generateTokens(_owner, msg.value)) {
             throw;
-        }*/
+        }
 
         return;
     }
