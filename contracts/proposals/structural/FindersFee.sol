@@ -21,6 +21,7 @@ contract FindersFee is Common {
     * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
     * @param fee Defines the new finders fee.
     * @param multiple Defines the new multiple from the initial creators deposit.
+    * @param vga The address for the VegaToken
 	*/
     function FindersFee (
         uint _fee,
@@ -29,7 +30,8 @@ contract FindersFee is Common {
 	Common (
         bytes32 _name,
         string _description,
-        uint _duration
+        uint _duration,
+        address _vga
     ) {
         fee = _fee;
         multiple = _multiple;

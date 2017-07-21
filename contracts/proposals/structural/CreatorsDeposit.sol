@@ -1,32 +1,34 @@
 pragma solidity ^0.4.8;
 import "./Common.sol";
-/**@title Rserve Proposal 
-* What: Reserve Proposals establish how many tokens received through a Creators Proposal should be allocated only to Project Proposals that have aready 
-*       been approved once before, and are approved again.
-* Why: Sometimes Project and Exchange Proposals will benifit more from concentrated multiple rounds of execution rather than just a single one.
+/**@title Creators Deposit Proposal 
+* What: Creators Deposit Proposals establish the required deposit amount for an proposal to be created. 
+* Why: Vega would like to discorage Proposal spamming and make those submiting proposals to have some skin in the game.
+* Example: Vega sets the Creators Deposit to 2 Vega Tokens.
 *
 * ~~Potential Issues~~
 */
-contract Reserve is Common {
+contract CreatorsDeposit is Common {
 
-    uint reserve;
+    uint deposit;
 
 	/**
 	* @dev Main constructor for a Common proposal
     * @param name A way to identify the title of the proposal.
     * @param description Any string, and or an IPFS path, URL, etc.
     * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
-    * @param reserve Defines the new reserve amount as a % of a token raise from a creation proposal.
+    * @param deposit Defines the new deposit amount.
+    * @param vga The address for the VegaToken
 	*/
     function Rewards (
-        uint _reserve;
+        bytes32 _deposit;
 	) 
 	Common (
         bytes32 _name,
         string _description,
-        uint _duration
+        uint _duration,
+        address _vga
     ) {
-        reserve = _reserve;
+        deposit = _deposit;
     }
 
     /**
@@ -34,6 +36,6 @@ contract Reserve is Common {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        /// Set a reserve on the main vega token to the reserve specified in this proposal.
+        /// Set the creators deposit for the main token(VGA) to the creators deposit stated in this proposal
     }
 }

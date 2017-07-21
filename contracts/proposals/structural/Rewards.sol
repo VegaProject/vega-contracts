@@ -1,32 +1,34 @@
 pragma solidity ^0.4.8;
 import "./Common.sol";
-/**@title Creators Deposit Proposal 
-* What: Creators Deposit Proposals establish the required deposit amount for an proposal to be created. 
-* Why: Vega would like to discorage Proposal spamming and make those submiting proposals to have some skin in the game.
-* Example: Vega sets the Creators Deposit to 2 Vega Tokens.
+/**@title Rewards Proposal 
+* What: Sets when a rewards event takes place.
+* Why: Needs to change based on the current market and block time factors of Ethereum.
+* Example: Every 6,000 blocks a decision reward event takes place.
 *
 * ~~Potential Issues~~
 */
-contract CreatorsDeposit is Common {
+contract Rewards is Common {
 
-    uint deposit;
+    uint event;
 
 	/**
 	* @dev Main constructor for a Common proposal
     * @param name A way to identify the title of the proposal.
     * @param description Any string, and or an IPFS path, URL, etc.
     * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
-    * @param deposit Defines the new deposit amount.
+    * @param event Sets when and how often decision reward events take place based on a block count.
+    * @param vga The address for the VegaToken
 	*/
     function Rewards (
-        bytes32 _deposit;
+        unit _event;
 	) 
 	Common (
         bytes32 _name,
         string _description,
-        uint _duration
+        uint _duration,
+        address _vga
     ) {
-        deposit = _deposit;
+        event = _event;
     }
 
     /**
@@ -34,6 +36,6 @@ contract CreatorsDeposit is Common {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        /// Set the creators deposit for the main token(VGA) to the creators deposit stated in this proposal
+        /// Set the event on the main vega token to to event for this proposal.
     }
 }

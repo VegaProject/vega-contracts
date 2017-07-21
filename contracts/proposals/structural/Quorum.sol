@@ -18,6 +18,7 @@ contract Quorum is Common {
     * @param description Any string, and or an IPFS path, URL, etc.
     * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
     * @param quorum Defines the new quorum.
+    * @param vga The address for the VegaToken
 	*/
     function Rewards (
         bytes32 _quorum;
@@ -25,7 +26,8 @@ contract Quorum is Common {
 	Common (
         bytes32 _name,
         string _description,
-        uint _duration
+        uint _duration,
+        address _vga
     ) {
         quorum = _quorum;
     }
