@@ -1,12 +1,12 @@
 pragma solidity ^0.4.8;
 import "./Common.sol";
-/**@title Exchange Offer 
-* What: Exchange Offers are used to create a transaction to place an order or make an order on a decentralized exchange to exchange one contract for another.
+/**@title Exchange Proposal 
+* What: Exchange Proposals are used to create a transaction to place an order or make an order on a decentralized exchange to exchange one contract for another.
 * Why: The network needs to have the ability to adapt to current markets and exchange contracts for others.
 * Example: Vega trades it's X Coins for Ether through the 0x Protocol.
 *
 * ~~Potential Issues~~
-* In order for this offer to work it would seem that there needs
+* In order for this proposal to work it would seem that there needs
 * to be more progress on the front of creating a unified standard for the trade of ERC20 tokens (Ox protocol)
 */
 contract Exchange is Common {
@@ -17,12 +17,12 @@ contract Exchange is Common {
     uint exchangeAmount;
     uitn orderPeriod;
 	/**
-	* @dev Main constructor for a Common offer
-    * @param name A way to identify the title of the offer.
+	* @dev Main constructor for a Common proposal
+    * @param name A way to identify the title of the proposal.
 	* @param token The token used in the transaction. If not defined default to Ether.
 	* @param amount The number of tokens to send.
     * @param description Any string, and or an IPFS path, URL, etc.
-    * @param duration Time the offer will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
+    * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
     * @param exchangeToken The token received in exchange.
     * @param exchangeAmount A number of tokens received.
     * @param orderPeriod How long the order will be available for.
