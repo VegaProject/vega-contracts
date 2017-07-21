@@ -10,6 +10,10 @@ import "./Common.sol";
 contract Rewards is Common {
 
     uint event;
+    uint reporting;
+    uint vestingEvent;
+    uint vesting;
+    uint
 
 	/**
 	* @dev Main constructor for a Common proposal
