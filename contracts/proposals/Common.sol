@@ -1,4 +1,7 @@
 pragma solidity ^0.4.8;
+import "../tokens/VegaToken.sol";
+
+
 /**@title Common Proposal 
 * This proposal is meant to hold the minimum parameters and functions needed
 * to execute an proposal.
@@ -12,9 +15,9 @@ contract Common is Ownable {
     string description;
     uint duration;
     uint startTime;
+    VegaToken vga;
     enum ProposalStates { pending, failed, approved, denied };
     ProposalStates state = ProposalStates.pending;
-    mapping (address => bool) private votes;
     /**
     * @dev Main constructor for a Common proposal
     * @param name A way to identify the title of the proposal.
@@ -32,23 +35,7 @@ contract Common is Ownable {
         description = _description;
         duration = _duration;
         startTime = block.timestamp;
-        vga = _vga;
-    }
-
-    /**
-    * This contract should check and ensure that the duration of the
-    * proposal has not passed. If the duration for the contract has passed this contract
-    * needs to inform the controlling contract.
-    * alternatively we may consider using a contract like the ethereum alarm clock
-    * @dev Basic method for casting a vote
-    * @param inSupport True if voter supports the vote.
-    */
-    function vote(bool inSupport) {
-        require(startTime + duration < block.timestamp);
-        votes[msg.sender] = inSupport;
-        // This function should alert the proposals controller on a vote cast
-        // This will allow for the controlling function to check if this proposal can execute and
-        // execute the proposal as needed.
+        vga = VegaToken(_vga);
     }
 
     /**
@@ -59,6 +46,10 @@ contract Common is Ownable {
     */
     function canExecute() public constant returns (bool executable) {
         
+    }
+
+    function openForVoting() public constant returns (bool stillOpen){
+        return (block.timestamp < startTime + duration);
     }
 
 

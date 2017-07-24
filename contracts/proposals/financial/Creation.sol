@@ -5,7 +5,7 @@ import "../Common.sol";
 *
 * ~~Potential Issues~~
 */
-contract Creation is Common {
+contract Creation is Common, StakeVote {
 
     address contract;
     uint amount;
@@ -28,7 +28,11 @@ contract Creation is Common {
         string _description,
         uint _duration,
         address _vga
-    ) {
+    )
+    StakeVote (
+        address _vga        
+    ) 
+    {
         contract = _deposit;
         amount = _amount;
     }

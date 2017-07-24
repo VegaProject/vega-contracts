@@ -8,7 +8,7 @@ import "./Common.sol";
 *
 * ~~Potential Issues~~
 */
-contract Quorum is Common {
+contract Quorum is Common, StandardVote {
 
     uint quorum;
 
@@ -28,7 +28,11 @@ contract Quorum is Common {
         string _description,
         uint _duration,
         address _vga
-    ) {
+    )
+    StandardVote (
+        address _vga        
+    ) 
+    {
         quorum = _quorum;
     }
 

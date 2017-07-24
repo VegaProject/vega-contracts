@@ -7,7 +7,7 @@ import "./Common.sol";
 *
 * ~~Potential Issues~~
 */
-contract Metric is Common {
+contract Metric is Common, StandardVote {
 
     bytes32 metric;
 
@@ -27,7 +27,11 @@ contract Metric is Common {
         string _description,
         uint _duration,
         address _vga
-    ) {
+    )
+    StandardVote (
+        address _vga        
+    ) 
+    {
         metric = _metric;
     }
 

@@ -7,7 +7,7 @@ import "./Common.sol";
 *
 * ~~Potential Issues~~
 */
-contract CreatorsDeposit is Common {
+contract CreatorsDeposit is Common, StandardVote {
 
     uint deposit;
 
@@ -27,7 +27,11 @@ contract CreatorsDeposit is Common {
         string _description,
         uint _duration,
         address _vga
-    ) {
+    )
+    StandardVote (
+        address _vga        
+    ) 
+    {
         deposit = _deposit;
     }
 

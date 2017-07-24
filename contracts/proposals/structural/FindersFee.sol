@@ -9,7 +9,7 @@ import "./Common.sol";
 *
 * ~~Potential Issues~~
 */
-contract FindersFee is Common {
+contract FindersFee is Common, StandardVote {
 
     uint fee;
     uint multiple;
@@ -32,7 +32,11 @@ contract FindersFee is Common {
         string _description,
         uint _duration,
         address _vga
-    ) {
+    )
+    StandardVote (
+        address _vga        
+    ) 
+    {
         fee = _fee;
         multiple = _multiple;
     }

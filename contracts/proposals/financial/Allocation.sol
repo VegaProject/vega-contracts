@@ -6,7 +6,7 @@ import "../Common.sol";
 *
 * ~~Potential Issues~~
 */
-contract Allocation is Common {
+contract Allocation is Common, StakeVote {
 
     address contract;
     address token;
@@ -32,7 +32,11 @@ contract Allocation is Common {
         string _description,
         uint _duration,
         address _vga
-    ) {
+    )
+    StakeVote (
+        address _vga        
+    )
+    {
         contract = _deposit;
         token = _token;
         amount = _amount;

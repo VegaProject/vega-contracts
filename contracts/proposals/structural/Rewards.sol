@@ -1,5 +1,7 @@
 pragma solidity ^0.4.8;
 import "./Common.sol";
+import "./voting/StandardVote.sol";
+
 /**@title Rewards Proposal 
 * What: Sets when a rewards event takes place.
 * Why: Needs to change based on the current market and block time factors of Ethereum.
@@ -7,13 +9,12 @@ import "./Common.sol";
 *
 * ~~Potential Issues~~
 */
-contract Rewards is Common {
+contract Rewards is Common, StandardVote {
 
     uint event;
     uint reporting;
     uint vestingEvent;
     uint vesting;
-    uint
 
 	/**
 	* @dev Main constructor for a Common proposal
@@ -24,15 +25,25 @@ contract Rewards is Common {
     * @param vga The address for the VegaToken
 	*/
     function Rewards (
-        unit _event;
+        uint _event,
+        uint _reporting,
+        uint _vestingEvent,
+        uint _vesting   
 	) 
 	Common (
         bytes32 _name,
         string _description,
         uint _duration,
         address _vga
-    ) {
+    )
+    StandardVote (
+        address _vga        
+    ) 
+    {
         event = _event;
+        report = _reporting;
+        vestingEvent = _vestingEvent;
+        vesting = _vesting;
     }
 
     /**
