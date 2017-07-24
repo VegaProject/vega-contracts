@@ -1,27 +1,11 @@
 pragma solidity ^0.4.8;
-contract StakeVote {
+contract StakeVote is Vote {
 
-    address common;
-    address vga;
-    struct Vote{
-        address voter;
-        bool inSupport;
-        uint weight;
-    }
-
-    Vote[] votes;
-
-    struct voteStatus{
-        bool hasVoted;
-        uint voteIndex;
-    }
-    mapping (address => voteStatus) private status;
-
-    function StakeVote (address _vga){
-        address voteAddress = this;
-        common = Common(voteAddress);
-        vga = VegaToken(_vga);
-    }
+    function StakeVote ()
+    Vote(
+        address _vga
+    )
+    { }
     
     // Currently vote will only allow the voter to change their voting position and add weight into their current
     // Voting position. It may make sense to move the addition of weight into another function.

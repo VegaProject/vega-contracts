@@ -40,6 +40,7 @@ contract CreatorsDeposit is Common, StandardVote {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        /// Set the creators deposit for the main token(VGA) to the creators deposit stated in this proposal
+        address rewardAddress = this;
+        vga.updateDeposit(rewardAddress);
     }
 }

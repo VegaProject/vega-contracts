@@ -37,4 +37,5 @@ contract Owned {
     function changeOwner(address _newOwner) onlyOwner {
         owner = _newOwner;
     }
+
 }

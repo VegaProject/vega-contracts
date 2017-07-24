@@ -1,6 +1,6 @@
 pragma solidity ^0.4.8;
 import "../tokens/VegaToken.sol";
-
+import "../helpers/Owned.sol";
 
 /**@title Common Proposal 
 * This proposal is meant to hold the minimum parameters and functions needed
@@ -45,7 +45,8 @@ contract Common is Ownable {
     * @return returns true if the contract can execute and false if the contract cannot 
     */
     function canExecute() public constant returns (bool executable) {
-        
+        require(state == ProposalStates.approved);
+        return true;
     }
 
     function openForVoting() public constant returns (bool stillOpen){

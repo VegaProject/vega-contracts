@@ -40,6 +40,7 @@ contract Metric is Common, StandardVote {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        // Set metric in root token (VegaToken) to new metric
+        address rewardAddress = this;
+        vga.updateMetric(rewardAddress);
     }
 }

@@ -41,6 +41,7 @@ contract Quorum is Common, StandardVote {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        /// Set the quorum for the main token(VGA) to the quorum stated in this proposal
+        address rewardAddress = this;
+        vga.updateQuorum(rewardAddress);
     }
 }

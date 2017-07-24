@@ -11,10 +11,10 @@ import "./voting/StandardVote.sol";
 */
 contract Rewards is Common, StandardVote {
 
-    uint event;
-    uint reporting;
-    uint vestingEvent;
-    uint vesting;
+    uint public event;
+    uint public reporting;
+    uint public vestingEvent;
+    uint public vesting;
 
 	/**
 	* @dev Main constructor for a Common proposal
@@ -51,6 +51,7 @@ contract Rewards is Common, StandardVote {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        /// Set the event on the main vega token to to event for this proposal.
+        address rewardAddress = this;
+        vga.updateRewards(rewardAddress);
     }
 }

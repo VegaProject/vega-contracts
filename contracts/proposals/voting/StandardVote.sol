@@ -4,7 +4,7 @@ import "../helpers/Owned.sol";
 import "../Common.sol";
 import "../../tokens/VegaToken.sol";
 
-contract StandardVote is Owned {
+contract StandardVote is Vote {
 
     function StandardVote ()
     Vote(

@@ -46,6 +46,7 @@ contract FindersFee is Common, StandardVote {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        // Set fee structure in root token (VegaToken) to new fee structure
+        address rewardAddress = this;
+        vga.updateFee(rewardAddress);
     }
 }
