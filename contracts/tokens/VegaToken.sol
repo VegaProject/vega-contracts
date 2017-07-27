@@ -1,11 +1,15 @@
-import "../node_modules/minimetoken/contracts/MiniMeToken.sol";
-import "../proposals/structural/Rewards.sol";
+pragma solidity ^0.4.6;
+
+import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
+/*import "../proposals/structural/Rewards.sol";
 import "../proposals/structural/Quorum.sol";
 import "../proposals/structural/Metric.sol";
 import "../proposals/structural/FindersFee.sol";
-import "../proposals/structural/CreatorsDeposit.sol";
+import "../proposals/structural/CreatorsDeposit.sol";*/
+
 
 contract VegaToken is MiniMeToken {
+    /*
 
     uint public event;
     uint public  reporting;
@@ -19,7 +23,6 @@ contract VegaToken is MiniMeToken {
 
 
     function VegaToken(
-
     ) MiniMeToken(
         address _tokenFactory,
         address _parentToken,
@@ -28,10 +31,10 @@ contract VegaToken is MiniMeToken {
         uint8 _decimalUnits,
         string _tokenSymbol,
         bool _transfersEnabled
-    ) {
+    )
+    {
 
     }
-
     function updateRewards(address _address) public {
         Rewards reward = Rewards(_address);
         require(reward.isVotePassed());
@@ -43,7 +46,7 @@ contract VegaToken is MiniMeToken {
         vesting = reward.vesting();
     }
 
-    function updateQuorum(address _address){
+    function updateQuorum(address _address) {
         Quorum quorum = Quorum(_address);
         require(quorum.isVotePassed());
         require(!quorum.voteApplied());
@@ -51,7 +54,7 @@ contract VegaToken is MiniMeToken {
         quorum = quorum.quorum();
     }
     
-    function updateMetric(address _address){
+    function updateMetric(address _address) {
         Metric metric = Metric(_address);
         require(metric.isVotePassed());
         require(!metric.voteApplied());
@@ -59,7 +62,7 @@ contract VegaToken is MiniMeToken {
         metric = metric.metric();
     }
 
-    function updateFee(address _address){
+    function updateFee(address _address) {
         FindersFee fee = FindersFee(_address);
         require(fee.isVotePassed());
         require(!fee.voteApplied());
@@ -68,12 +71,12 @@ contract VegaToken is MiniMeToken {
         multiple = fee.multiple();
     }
 
-    function updateDeposit(address _address){
+    function updateDeposit(address _address) {
         CreatorsDeposit deposit = CreatorsDeposit(_address);
         require(deposit.isVotePassed());
         require(!deposit.voteApplied());
         deposit.applyVote();
         deposit = deposit.deposit();
-    }            
+    } */           
 
 }

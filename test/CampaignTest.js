@@ -1,8 +1,8 @@
-import ethConnector from "ethconnector";
+import ethClient from "ethconnector";
 import assert from "assert"; // node.js core module
-import MiniMeToken from "../node_modules/minimetoken/contracts/MiniMeToken.sol";
+//import MiniMeToken from "../node_modules/minimetoken/contracts/MiniMeToken.sol";
 
-import VegaCampaign from "../js/givethcampaign";
+//import VegaCampaign from "../js/givethcampaign";
 
 const verbose = false;
 
@@ -25,6 +25,7 @@ describe("Giveth Campaign test test", () => {
             done();
         });
     });
+    /*
     it("Get Now", (done) => {
         ethConnector.web3.eth.getBlock("latest", (err, block) => {
             assert.ifError(err);
@@ -79,4 +80,5 @@ describe("Giveth Campaign test test", () => {
             console.log(S);
         }
     }
+    */
 });

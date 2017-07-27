@@ -1,32 +1,35 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node', '/usr/bin/npm', 'run', 'test' ]
+1 verbose cli [ '/home/quazia/.nvm/versions/node/v6.11.0/bin/node',
+1 verbose cli   '/home/quazia/.nvm/versions/node/v6.11.0/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'test' ]
 2 info using npm@3.10.10
-3 info using node@v8.2.1
+3 info using node@v6.11.0
 4 verbose run-script [ 'pretest', 'test', 'posttest' ]
 5 info lifecycle vega-contracts@0.0.1~pretest: vega-contracts@0.0.1
 6 silly lifecycle vega-contracts@0.0.1~pretest: no script for pretest, continuing
 7 info lifecycle vega-contracts@0.0.1~test: vega-contracts@0.0.1
 8 verbose lifecycle vega-contracts@0.0.1~test: unsafe-perm in lifecycle true
-9 verbose lifecycle vega-contracts@0.0.1~test: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/home/quazia/Sites/vega-contracts/node_modules/.bin:/home/quazia/bin:/home/quazia/.npm-global/bin:/home/quazia/bin:/home/quazia/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-10 verbose lifecycle vega-contracts@0.0.1~test: CWD: /home/quazia/Sites/vega-contracts
+9 verbose lifecycle vega-contracts@0.0.1~test: PATH: /home/quazia/.nvm/versions/node/v6.11.0/lib/node_modules/npm/bin/node-gyp-bin:/home/quazia/sites/vega-contracts/node_modules/.bin:/home/quazia/.nvm/versions/node/v6.11.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+10 verbose lifecycle vega-contracts@0.0.1~test: CWD: /home/quazia/sites/vega-contracts
 11 silly lifecycle vega-contracts@0.0.1~test: Args: [ '-c', 'truffle test' ]
 12 silly lifecycle vega-contracts@0.0.1~test: Returned: code: 1  signal: null
 13 info lifecycle vega-contracts@0.0.1~test: Failed to exec test script
 14 verbose stack Error: vega-contracts@0.0.1 test: `truffle test`
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/usr/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
-14 verbose stack     at emitTwo (events.js:125:13)
-14 verbose stack     at EventEmitter.emit (events.js:213:7)
-14 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:40:14)
-14 verbose stack     at emitTwo (events.js:125:13)
-14 verbose stack     at ChildProcess.emit (events.js:213:7)
-14 verbose stack     at maybeClose (internal/child_process.js:921:16)
-14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+14 verbose stack     at EventEmitter.<anonymous> (/home/quazia/.nvm/versions/node/v6.11.0/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (/home/quazia/.nvm/versions/node/v6.11.0/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:891:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid vega-contracts@0.0.1
-16 verbose cwd /home/quazia/Sites/vega-contracts
-17 error Linux 4.8.0-58-generic
-18 error argv "/usr/local/bin/node" "/usr/bin/npm" "run" "test"
-19 error node v8.2.1
+16 verbose cwd /home/quazia/sites/vega-contracts
+17 error Linux 4.4.0-21-generic
+18 error argv "/home/quazia/.nvm/versions/node/v6.11.0/bin/node" "/home/quazia/.nvm/versions/node/v6.11.0/bin/npm" "run" "test"
+19 error node v6.11.0
 20 error npm  v3.10.10
 21 error code ELIFECYCLE
 22 error vega-contracts@0.0.1 test: `truffle test`

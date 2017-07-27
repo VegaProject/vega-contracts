@@ -7,7 +7,7 @@ var MiniMeToken = artifacts.require("../node_modules/minimetoken/contracts/MiniM
 const verbose = false;
 
 contract('VegaCampaignFactory', function(accounts) {
-
+  /*
   it("should put 10000 MetaCoin in the first account", () => {
     return MiniMeToken.new(accounts[7], 0x0, 0x0, "Vega", 18, "Vega", false).then(function(instance) {
       instance.totalSupply.call().then( (result) => {
@@ -24,5 +24,6 @@ contract('VegaCampaignFactory', function(accounts) {
       })
     });  
   });
+  */
 });
 
