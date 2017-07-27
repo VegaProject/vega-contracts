@@ -1,17 +1,17 @@
 pragma solidity ^0.4.6;
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
-/*import "../proposals/structural/Rewards.sol";
+import "../proposals/structural/Rewards.sol";
 import "../proposals/structural/Quorum.sol";
 import "../proposals/structural/Metric.sol";
 import "../proposals/structural/FindersFee.sol";
-import "../proposals/structural/CreatorsDeposit.sol";*/
+import "../proposals/structural/CreatorsDeposit.sol";
 
 
-contract VegaToken is MiniMeToken {
-    /*
+contract VegaToken is MiniMeToken{
 
-    uint public event;
+
+    uint public localEvent;
     uint public  reporting;
     uint public  vestingEvent;
     uint public  vesting;
@@ -20,20 +20,11 @@ contract VegaToken is MiniMeToken {
     uint public  fee;
     uint public  multiple;
     uint public  deposit;
+    
 
 
-    function VegaToken(
-    ) MiniMeToken(
-        address _tokenFactory,
-        address _parentToken,
-        uint _parentSnapShotBlock,
-        string _tokenName,
-        uint8 _decimalUnits,
-        string _tokenSymbol,
-        bool _transfersEnabled
-    )
-    {
-
+    function VegaToken(){
+        address local = this;
     }
     function updateRewards(address _address) public {
         Rewards reward = Rewards(_address);
@@ -77,6 +68,6 @@ contract VegaToken is MiniMeToken {
         require(!deposit.voteApplied());
         deposit.applyVote();
         deposit = deposit.deposit();
-    } */           
+    }        
 
 }

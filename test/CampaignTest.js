@@ -1,5 +1,4 @@
-import ethClient from "ethconnector";
-import assert from "assert"; // node.js core module
+let ethConnector = require("ethconnector");
 //import MiniMeToken from "../node_modules/minimetoken/contracts/MiniMeToken.sol";
 
 //import VegaCampaign from "../js/givethcampaign";

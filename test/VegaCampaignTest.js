@@ -1,9 +1,7 @@
 const ethConnector = require("ethconnector");
-const assert = require("assert"); // node.js core module
-const async = require("async");
 
-var VegaCampaignFactory = artifacts.require("VegaCampaignFactory");
-var MiniMeToken = artifacts.require("../node_modules/minimetoken/contracts/MiniMeToken.sol");
+//var VegaCampaignFactory = artifacts.require("VegaCampaignFactory");
+//var MiniMeToken = artifacts.require("../node_modules/minimetoken/contracts/MiniMeToken.sol");
 const verbose = false;
 
 contract('VegaCampaignFactory', function(accounts) {
