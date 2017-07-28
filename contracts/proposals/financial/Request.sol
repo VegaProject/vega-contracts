@@ -12,48 +12,7 @@ import "../voting/StakeVote.sol";
 *
 * ~~Potential Issues~~
 */
-contract Request is Common, StakeVote {
+contract Request is Common {
 
-    address public instance;
-    address public token;
-    uint amount;
-
-	/**
-	* @dev Main Request for a Common proposal
-    * @param name A way to identify the title of the proposal.
-    * @param description Any string, and or an IPFS path, URL, etc.
-    * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
-    * @param contract The contract the tokens will be sent to.
-    * @param token The token used in the transaction. If not defined default to Ether.
-    * @param amount The number of tokens to send.
-    * @param vga The address for the VegaToken
-    */
-    function Request (
-        address _contract,
-        address _token,
-        uint _amount
-	) 
-	Common (
-        bytes32 _name,
-        string _description,
-        uint _duration,
-        address _vga
-    )
-    StakeVote (
-        address _vga        
-    ) 
-    {
-        instance = _contract;
-        token = _token;
-        amount = _amount;
-    }
-
-    /**
-    * This function needs to handle any checks before the contract can be executed.
-    * @dev Function used to cause the contract to execute.
-    */
-    function execute() public {
-        // Set metric in root token (VegaToken) to new metric
-    }
-
+ 
 }

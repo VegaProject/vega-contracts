@@ -1,5 +1,5 @@
 pragma solidity ^0.4.11;
-import "../Common.sol";
+//import "../Common.sol";
 import "../voting/StandardVote.sol";
 
 /**@title Quorum Proposal 
@@ -10,32 +10,21 @@ import "../voting/StandardVote.sol";
 *
 * ~~Potential Issues~~
 */
-contract Quorum is Common, StandardVote {
+contract Quorum {
 
-    uint quorum;
+    uint public quorum;
+    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
-    * @param name A way to identify the title of the proposal.
-    * @param description Any string, and or an IPFS path, URL, etc.
-    * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
-    * @param quorum Defines the new quorum.
-    * @param vga The address for the VegaToken
 	*/
     function Quorum (
-        uint _quorum
-	) 
-	Common (
-        bytes32 _name,
-        string _description,
-        uint _duration,
+        uint _quorum,
         address _vga
-    )
-    StandardVote (
-        address _vga        
-    ) 
+	) 
     {
         quorum = _quorum;
+        vote = _vga;
     }
 
     /**
@@ -44,6 +33,5 @@ contract Quorum is Common, StandardVote {
     */
     function execute() public {
         address rewardAddress = this;
-        vga.updateQuorum(rewardAddress);
     }
 }

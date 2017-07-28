@@ -1,7 +1,5 @@
 pragma solidity ^0.4.11;
 
-import "../Common.sol";
-import "../../tokens/VegaToken.sol";
 import "../../helpers/Owned.sol";
 
 
@@ -9,30 +7,23 @@ contract Vote is Owned {
 
     uint yayWeight = 0;
     uint nayWeight = 0;
-    Common common;
-    VegaToken vga;
-    bool voteApplied;
+    bool public voteApplied;
+    uint quorum = 100;
 
-    struct Vote {
+    struct VoteInfo {
         address voter;
         bool inSupport;
         uint weight;
     }
 
-    Vote[] votes;
+    VoteInfo[] votes;
 
     struct VoteStatus {
         bool hasVoted;
         uint voteIndex;
     }
 
-    mapping (address => VoteStatus) private status;
-
-    function Vote (address _vga) {
-        address voteAddress = this;
-        common = Common(voteAddress);
-        vga = VegaToken(_vga);
-    }
+    mapping (address => VoteStatus) public statusMap;
 
     /**
     * This contract should check and ensure that the duration of the
@@ -46,20 +37,23 @@ contract Vote is Owned {
 
     function countVote() public returns (bool counted);
 
-    function quorumReached() public constant (bool isReached) {
+    function updateQuorum(uint _quorum) onlyOwner {
+        quorum = _quorum;
+    }
+
+    function quorumReached() public constant returns (bool isReached) {
         uint totalWeight = yayWeight + nayWeight;
-        isReached = totalWeight >= vga.quorum();
+        isReached = totalWeight >= quorum;
         return isReached;
     }
 
-    function consensusReached() public constant (bool isReached) {
+    function consensusReached() public constant returns (bool isReached) {
         isReached = yayWeight > nayWeight;
         return isReached;
     }
 
     function isVotePassed() public constant returns (bool votePassed) {
-        require(!common.openForVoting());
-        totalWeight = yayWeight + nayWeight;
+        uint totalWeight = yayWeight + nayWeight;
         require(quorumReached());
         require(consensusReached());
         return true;

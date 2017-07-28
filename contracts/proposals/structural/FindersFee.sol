@@ -12,36 +12,32 @@ import "../voting/StandardVote.sol";
 *
 * ~~Potential Issues~~
 */
-contract FindersFee is Common, StandardVote {
+contract FindersFee is Common {
 
-    uint fee;
-    uint multiple;
+    uint public fee;
+    uint  public multiple;
+    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
-    * @param name A way to identify the title of the proposal.
-    * @param description Any string, and or an IPFS path, URL, etc.
-    * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
-    * @param fee Defines the new finders fee.
-    * @param multiple Defines the new multiple from the initial creators deposit.
-    * @param vga The address for the VegaToken
 	*/
     function FindersFee (
         uint _fee,
-        uint _multiple
-	) 
-	Common (
+        uint _multiple,
         bytes32 _name,
         string _description,
         uint _duration,
         address _vga
+	)
+    Common (
+        _description,
+        _duration,
+        _vga
     )
-    StandardVote (
-        address _vga        
-    ) 
     {
         fee = _fee;
         multiple = _multiple;
+        vote = _vga;
     }
 
     /**
@@ -50,6 +46,5 @@ contract FindersFee is Common, StandardVote {
     */
     function execute() public {
         address rewardAddress = this;
-        vga.updateFee(rewardAddress);
     }
 }

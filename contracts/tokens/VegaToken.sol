@@ -6,6 +6,8 @@ import "../proposals/structural/Quorum.sol";
 import "../proposals/structural/Metric.sol";
 import "../proposals/structural/FindersFee.sol";
 import "../proposals/structural/CreatorsDeposit.sol";
+import "../proposals/voting/StandardVote.sol";
+import "../proposals/voting/StakeVote.sol";
 
 
 contract VegaToken is MiniMeToken{
@@ -26,48 +28,59 @@ contract VegaToken is MiniMeToken{
     function VegaToken(){
         address local = this;
     }
-    function updateRewards(address _address) public {
+
+    /*function updateRewards(address _address) public {
         Rewards reward = Rewards(_address);
-        require(reward.isVotePassed());
-        require(!reward.voteApplied());
-        reward.applyVote();        
-        event = reward.event();
+        StandardVote vote = StandardVote(reward.vote());
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(vote.voteApplied());
+        vote.applyVote();        
+        localEvent = reward.localEvent();
         reporting = reward.reporting();
         vestingEvent = reward.vestingEvent();
         vesting = reward.vesting();
-    }
+    }*/
 
     function updateQuorum(address _address) {
-        Quorum quorum = Quorum(_address);
-        require(quorum.isVotePassed());
-        require(!quorum.voteApplied());
-        quorum.applyVote();        
-        quorum = quorum.quorum();
+        Quorum quorumContract = Quorum(_address);
+        StandardVote vote = StandardVote(quorumContract.vote());
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(vote.voteApplied());
+        vote.applyVote();         
+        quorum = quorumContract.quorum();
     }
     
     function updateMetric(address _address) {
-        Metric metric = Metric(_address);
-        require(metric.isVotePassed());
-        require(!metric.voteApplied());
-        metric.applyVote();        
-        metric = metric.metric();
+        Metric metricContract = Metric(_address);
+        StandardVote vote = StandardVote(metricContract.vote());
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(vote.voteApplied());
+        vote.applyVote();        
+        metric = metricContract.metric();
     }
 
     function updateFee(address _address) {
-        FindersFee fee = FindersFee(_address);
-        require(fee.isVotePassed());
-        require(!fee.voteApplied());
-        fee.applyVote();        
-        fee = fee.fee();
-        multiple = fee.multiple();
+        FindersFee feeContract = FindersFee(_address);
+        StandardVote vote = StandardVote(feeContract.vote());
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(vote.voteApplied());
+        vote.applyVote();         
+        fee = feeContract.fee();
+        multiple = feeContract.multiple();
     }
 
     function updateDeposit(address _address) {
-        CreatorsDeposit deposit = CreatorsDeposit(_address);
-        require(deposit.isVotePassed());
-        require(!deposit.voteApplied());
-        deposit.applyVote();
-        deposit = deposit.deposit();
+        CreatorsDeposit depositContract = CreatorsDeposit(_address);
+        StandardVote vote = StandardVote(depositContract.vote());
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(vote.voteApplied());
+        vote.applyVote();  
+        deposit = depositContract.deposit();
     }        
 
 }

@@ -10,32 +10,21 @@ import "../voting/StandardVote.sol";
 *
 * ~~Potential Issues~~
 */
-contract Metric is Common, StandardVote {
+contract Metric is Common {
 
-    bytes32 metric;
+    bytes32 public metric;
+    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
-    * @param name A way to identify the title of the proposal.
-    * @param description Any string, and or an IPFS path, URL, etc.
-    * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
-    * @param metric Defines the new metric.
-    * @param vga The address for the VegaToken
 	*/
     function Metric (
-        bytes32 _metric
-	) 
-	Common (
-        bytes32 _name,
-        string _description,
-        uint _duration,
+        bytes32 _metric,
         address _vga
-    )
-    StandardVote (
-        address _vga        
-    ) 
+	)
     {
         metric = _metric;
+        vote = _vga;
     }
 
     /**
@@ -44,6 +33,5 @@ contract Metric is Common, StandardVote {
     */
     function execute() public {
         address rewardAddress = this;
-        vga.updateMetric(rewardAddress);
     }
 }

@@ -10,42 +10,37 @@ import "../voting/StandardVote.sol";
 *
 * ~~Potential Issues~~
 */
-contract CreatorsDeposit is Common, StandardVote {
+contract CreatorsDeposit is Common {
 
-    uint deposit;
+    uint public deposit;
+    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
-    * @param name A way to identify the title of the proposal.
-    * @param description Any string, and or an IPFS path, URL, etc.
-    * @param duration Time the proposal will be available for. Must be a minimum of ~7 days, and a maximum of ~30 days (calculated in block numbers)
-    * @param deposit Defines the new deposit amount.
-    * @param vga The address for the VegaToken
+    * @param _vga The address for the VegaToken
 	*/
-    /*
-    function CreatorsDeposit (
-        uint _deposit
-	) 
-	Common (
+    function CreatorsDeposit(
+        uint _deposit,
         bytes32 _name,
         string _description,
         uint _duration,
         address _vga
+	)
+    Common (
+        _description,
+        _duration,
+        _vga
     )
-    StandardVote (
-        address _vga        
-    ) 
     {
         deposit = _deposit;
+        vote = _vga;
     }
 
     /**
     * This function needs to handle any checks before the contract can be executed.
     * @dev Function used to cause the contract to execute.
     */
-    /*
     function execute() public {
         address rewardAddress = this;
-        vga.updateDeposit(rewardAddress);
-    }*/
+    }
 }
