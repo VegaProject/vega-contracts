@@ -1,83 +1,56 @@
-let ethConnector = require("ethconnector");
-//import MiniMeToken from "../node_modules/minimetoken/contracts/MiniMeToken.sol";
+let chai = require("chai")
+let chaiAsPromised = require("chai-as-promised")
+chai.use(chaiAsPromised)
+chai.should()
 
-//import VegaCampaign from "../js/givethcampaign";
+let VegaToken = artifacts.require("VegaToken");
+let VegaCampaign = artifacts.require("VegaCampaign");
+let MiniMeTokenFactory = artifacts.require("MiniMeTokenFactory");
+let MiniMeToken = artifacts.require("MiniMeToken");
+
 
 const verbose = false;
 
-describe("Giveth Campaign test test", () => {
-    let escapeCaller;
-    let escapeDestination;
-    let securityGuard;
-    let guest;
+contract("Vega", (accounts) => {
+
+
+    let factory;
     let vegaCampaign;
-    let miniMeToken;
-    let now;
+    let vega;
 
-    before((done) => {
-        ethConnector.init("testrpc", (err) => {
-            if (err) { done(err); return; }
-            escapeCaller = ethConnector.accounts[ 1 ];
-            escapeDestination = ethConnector.accounts[ 2 ];
-            securityGuard = ethConnector.accounts[ 3 ];
-            guest = ethConnector.accounts[ 4 ];
-            done();
-        });
-    });
-    /*
-    it("Get Now", (done) => {
-        ethConnector.web3.eth.getBlock("latest", (err, block) => {
-            assert.ifError(err);
-            now = block.timestamp;
-            done();
-        });
-    });
-    it("should deploy all the contracts", (done) => {
-        VegaCampaign.deploy(ethConnector.web3, {
-            tokenName: "MiniMe Test Token",
-            decimalUnits: 18,
-            tokenSymbol: "MMT",
-            escapeCaller,
-            escapeDestination,
-            absoluteMinTimeLock: 86400,
-            timeLock: 86400 * 2,
-            securityGuard,
-            maxSecurityGuardDelay: 86400 * 21,
-            startFundingTime: now - 86400,
-            endFundingTime: now + (86400 * 365 * 30),
-            maximumFunding: ethConnector.web3.toWei(10000),
-        }, (err, _vegaCampaign) => {
-            assert.ifError(err);
-            assert.ok(_vegaCampaign.contract.address);
-            vegaCampaign = _vegaCampaign;
-            log("Giveth Campaign: " + vegaCampaign.contract.address);
-            done();
-        });
-    }).timeout(20000);
-    it("Should get minime token", (done) => {
-        vegaCampaign.getState((err, _st) => {
-            miniMeToken = new MiniMeToken(ethConnector.web3, _st.tokenAddress);
-            done();
-        });
-    }).timeout(6000);
-    it("Should donate", (done) => {
-        vegaCampaign.donate({
-            owner: guest,
-            value: ethConnector.web3.toWei(10),
-        }, (err) => {
-            assert.ifError(err);
-            miniMeToken.getState((err2, _st) => {
-                assert.ifError(err2);
-                assert.equal(_st.balances[ guest ], 10);
-                done();
-            });
-        });
-    }).timeout(6000);
+    const TRANSFER_ONE = 10000;
 
-    function log(S) {
-        if (verbose) {
-            console.log(S);
-        }
-    }
-    */
+    let campaignDeployParams = 
+    (vault, token) => 
+    [
+        0,
+        1531180800,
+        1000000,
+        vault,
+        token
+    ]
+
+    before(async() => {
+      factory = await MiniMeTokenFactory.new.apply(
+        this  
+      )
+      vega = await VegaToken.new.apply(
+        this,
+        [factory.address]
+      )
+      vegaCampaign = await VegaCampaign.new.apply(
+        this,
+        campaignDeployParams(accounts[0], vega.address)
+      )
+      vega.changeController(vegaCampaign.address)
+    });
+
+    it("should send funds to the vegaCampaign", async () => {
+        let sender = accounts[0]
+        await vegaCampaign.send(TRANSFER_ONE,{from: sender})
+        // Use balanceOfAt as current MiniMeToken does not support balance()
+        let value = await vega.balanceOfAt(sender, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
+        console.log(value)
+        value.toNumber().should.be.equal(10000)        
+    })
 });

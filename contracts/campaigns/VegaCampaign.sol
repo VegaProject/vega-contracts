@@ -17,12 +17,9 @@ pragma solidity ^0.4.6;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/// @title MilestoneTracker Contract
 /// @author Jordi Baylina
 /// @dev This contract controls the issuance of tokens for the MiniMe Token
-///  Contract. This version specifically acts as a Campaign manager for raising
-///  funds for non-profit causes, but it can be customized for any variety of
-///  purposes.
+///  Contract. 
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 
@@ -33,7 +30,7 @@ import "../helpers/Owned.sol";
 ///  non-profit Campaign. This contract effectively dictates the terms of the
 ///  funding round.
 
-contract VegaCampaignFactory is TokenController, Owned {
+contract VegaCampaign is TokenController, Owned {
 
     uint public startFundingTime;       // In UNIX Time Format
     uint public endFundingTime;         // In UNIX Time Format
@@ -54,7 +51,7 @@ contract VegaCampaignFactory is TokenController, Owned {
 /// @param _vaultAddress The address that will store the donated funds
 /// @param _tokenAddress Address of the token contract this contract controls
 
-    function VegaCampaignFactory(
+    function VegaCampaign(
         uint _startFundingTime,
         uint _endFundingTime,
         uint _maximumFunding,

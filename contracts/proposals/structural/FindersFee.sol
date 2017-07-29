@@ -24,16 +24,8 @@ contract FindersFee is Common {
     function FindersFee (
         uint _fee,
         uint _multiple,
-        bytes32 _name,
-        string _description,
-        uint _duration,
         address _vga
 	)
-    Common (
-        _description,
-        _duration,
-        _vga
-    )
     {
         fee = _fee;
         multiple = _multiple;
