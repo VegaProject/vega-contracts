@@ -1,14 +1,13 @@
 pragma solidity ^0.4.6;
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
-/*import "../proposals/structural/Rewards.sol";
+import "../proposals/structural/Rewards.sol";
 import "../proposals/structural/Quorum.sol";
 import "../proposals/structural/Metric.sol";
 import "../proposals/structural/FindersFee.sol";
 import "../proposals/structural/CreatorsDeposit.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
-*/
 
 contract VegaToken is MiniMeToken(){
 
@@ -39,7 +38,6 @@ contract VegaToken is MiniMeToken(){
     function updateRewards(address _address) public {
         rewards = _address;
     }
-    /*
 
     function updateQuorum(address _address) {
         Quorum quorumContract = Quorum(_address);
@@ -81,5 +79,4 @@ contract VegaToken is MiniMeToken(){
         vote.applyVote();  
         deposit = depositContract.deposit();
     }        
-*/
 }

@@ -16,7 +16,7 @@ contract Vote is Owned {
         uint weight;
     }
 
-    VoteInfo[] votes;
+    VoteInfo[] public votes;
 
     struct VoteStatus {
         bool hasVoted;
@@ -53,7 +53,6 @@ contract Vote is Owned {
     }
 
     function isVotePassed() public constant returns (bool votePassed) {
-        uint totalWeight = yayWeight + nayWeight;
         require(quorumReached());
         require(consensusReached());
         return true;

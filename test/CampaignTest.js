@@ -13,19 +13,21 @@ const verbose = false;
 
 contract("Vega", (accounts) => {
 
-
     let factory;
     let vegaCampaign;
     let vega;
-
+    let now = web3.eth.getBlock(web3.eth.blockNumber).timestamp;
+    const TIME_INCREMENT = 10000;
     const TRANSFER_ONE = 10000;
+    const CAMPAIGN_CAP = 1000000;
+
 
     let campaignDeployParams = 
     (vault, token) => 
     [
-        0,
-        1531180800,
-        1000000,
+        now,
+        now + TIME_INCREMENT,
+        CAMPAIGN_CAP,
         vault,
         token
     ]
@@ -50,7 +52,6 @@ contract("Vega", (accounts) => {
         await vegaCampaign.send(TRANSFER_ONE,{from: sender})
         // Use balanceOfAt as current MiniMeToken does not support balance()
         let value = await vega.balanceOfAt(sender, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
-        console.log(value)
         value.toNumber().should.be.equal(10000)        
     })
 });

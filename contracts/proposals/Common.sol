@@ -10,7 +10,7 @@ import "../helpers/Owned.sol";
 * Need to handle how vote counting is achieved.
 */
 contract Common is Owned {
-    //bytes32 name;
+    bytes32 name;
     string description;
     uint duration;
     uint startTime;
@@ -20,12 +20,11 @@ contract Common is Owned {
     * @dev Main constructor for a Common proposal
     */
     function Common (
-        //bytes32 _name,
+        bytes32 _name,
         string _description,
-        uint _duration,
-        address _vga
+        uint _duration
     ) {
-        //name = _name;
+        name = _name;
         description = _description;
         duration = _duration;
         startTime = block.timestamp;

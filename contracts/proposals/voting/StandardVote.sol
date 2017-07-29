@@ -2,13 +2,15 @@ pragma solidity ^0.4.11;
 
 import "./Vote.sol";
 import "../../tokens/VegaToken.sol";
-
+import "../Common.sol";
 
 contract StandardVote is Vote {
 
     VegaToken vga;
+    Common common;
 
-    function StakeVote(address _vga){
+    function StandardVote(address _common, address _vga){
+        common = Common(_common);
         vga = VegaToken(_vga);
     }
 
@@ -22,7 +24,7 @@ contract StandardVote is Vote {
     */
     function vote(bool inSupport) public {
         bool hasVoted;
-        //require(common.openForVoting());
+        require(common.openForVoting());
         VoteStatus memory status = statusMap[msg.sender];
         if (hasVoted = status.hasVoted) {
             votes[status.voteIndex].inSupport = inSupport;
@@ -42,7 +44,8 @@ contract StandardVote is Vote {
             } else {
                 nayWeight = nayWeight + voteWeight;
             }
-        }   
+        }
+        return true;   
     }
 
 }

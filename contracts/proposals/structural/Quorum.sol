@@ -1,5 +1,5 @@
 pragma solidity ^0.4.11;
-//import "../Common.sol";
+import "../Common.sol";
 import "../voting/StandardVote.sol";
 
 /**@title Quorum Proposal 
@@ -10,7 +10,7 @@ import "../voting/StandardVote.sol";
 *
 * ~~Potential Issues~~
 */
-contract Quorum {
+contract Quorum is Common {
 
     uint public quorum;
     address public vote;
@@ -20,8 +20,16 @@ contract Quorum {
 	*/
     function Quorum (
         uint _quorum,
-        address _vga
-	) 
+        address _vga,
+        bytes32 _name,
+        string _description,
+        uint _duration               
+	)
+    Common(
+        _name,
+        _description,
+        _duration        
+    )
     {
         quorum = _quorum;
         vote = _vga;
@@ -32,6 +40,5 @@ contract Quorum {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        address rewardAddress = this;
     }
 }

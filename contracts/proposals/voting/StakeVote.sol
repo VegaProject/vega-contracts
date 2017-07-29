@@ -2,9 +2,11 @@ pragma solidity ^0.4.11;
 import "./Vote.sol";
 import "../../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 import "../../tokens/VegaToken.sol";
+import "../Common.sol";
 
 contract StakeVote is Vote {
     VegaToken vga;
+    Common common;
 
     function StakeVote(address _vga){
         vga = VegaToken(_vga);
@@ -13,7 +15,7 @@ contract StakeVote is Vote {
     // Currently vote will only allow the voter to change their voting position and add weight into their current
     // Voting position. It may make sense to move the addition of weight into another function.
     function vote(bool inSupport) public {
-        //require(common.openForVoting());
+        require(common.openForVoting());
         VoteStatus memory status = statusMap[msg.sender];
         bool hasVoted = status.hasVoted;
         address voteAddress = this;
@@ -40,6 +42,7 @@ contract StakeVote is Vote {
             } else {
                 nayWeight = nayWeight + voteWeight;
             }
-        }   
+        }
+        return true;
     }
 }

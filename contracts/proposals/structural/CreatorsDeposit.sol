@@ -33,6 +33,5 @@ contract CreatorsDeposit is Common {
     * @dev Function used to cause the contract to execute.
     */
     function execute() public {
-        address rewardAddress = this;
     }
 }
