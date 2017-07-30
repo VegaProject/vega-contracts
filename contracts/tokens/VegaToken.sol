@@ -30,7 +30,7 @@ contract VegaToken is MiniMeToken(){
     uint public  vestingEvent;
     uint public  vesting;
     uint public quorum;
-    bytes32 public  metric;
+    address public  metric;
     uint public  fee;
     uint public  multiple;
     uint public  deposit;
