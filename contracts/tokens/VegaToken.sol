@@ -45,17 +45,17 @@ contract VegaToken is MiniMeToken(){
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
         require(vote.voteApplied());
-        vote.applyVote();         
+        vote.applyVote();
         quorum = quorumContract.quorum();
     }
-    
+
     function updateMetric(address _address) {
         Metric metricContract = Metric(_address);
         StandardVote vote = StandardVote(metricContract.vote());
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
         require(vote.voteApplied());
-        vote.applyVote();        
+        vote.applyVote();
         metric = metricContract.metric();
     }
 
@@ -65,7 +65,7 @@ contract VegaToken is MiniMeToken(){
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
         require(vote.voteApplied());
-        vote.applyVote();         
+        vote.applyVote();
         fee = feeContract.fee();
         multiple = feeContract.multiple();
     }
@@ -76,7 +76,7 @@ contract VegaToken is MiniMeToken(){
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
         require(vote.voteApplied());
-        vote.applyVote();  
+        vote.applyVote();
         deposit = depositContract.deposit();
-    }        
+    }
 }

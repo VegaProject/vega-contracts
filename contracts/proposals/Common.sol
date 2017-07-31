@@ -2,7 +2,7 @@ pragma solidity ^0.4.11;
 
 import "../helpers/Owned.sol";
 
-/**@title Common Proposal 
+/**@title Common Proposal
 * This proposal is meant to hold the minimum parameters and functions needed
 * to execute an proposal.
 *
@@ -32,9 +32,9 @@ contract Common is Owned {
 
     /**
     * This handles only whether or not the contract is capable of executing.
-    * Since each proposal will have a different behavior on execution 
+    * Since each proposal will have a different behavior on execution
     * @dev Asseses the state of the contract and returns true if the function can execute
-    * @return returns true if the contract can execute and false if the contract cannot 
+    * @return returns true if the contract can execute and false if the contract cannot
     */
     function canExecute() public constant returns (bool executable) {
         require(state == ProposalStates.approved);
