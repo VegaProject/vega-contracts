@@ -1,11 +1,12 @@
 pragma solidity ^0.4.9;
 
 import './Math.sol';
-
+/*
 /// @title CDRCalculator
 /// @description helper functions used to calculate CDR for voters
+*/
 
-contract CDRCalculator {
+contract CDRCalculator is Math {
 
     function tokenPositiveRewards(
         bool _support,
@@ -42,19 +43,12 @@ contract CDRCalculator {
     function tokenNegativeRewards(
         bool _support,
         uint _votes,
-        uint _tokens,
-        uint _totalTokens,
-        uint _ROD,
         bool _outcome
         ) public constant returns (uint) {
 
         bool support = _support;
         uint votes = _votes;
-        uint vM = voteMultiple(_tokens, _totalTokens);
-        uint ROD = _ROD;
         bool outcome = _outcome;
-
-        uint amount = votes * vM * ROD;
 
         if (support == true) {
             if (outcome == true) {
@@ -89,9 +83,6 @@ contract CDRCalculator {
                 ) + tokenNegativeRewards(
                     _support,
                     _votes,
-                    _tokens,
-                    _totalTokens,
-                    _ROD,
                     _outcome
                     );
             return amount;

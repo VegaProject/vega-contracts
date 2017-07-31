@@ -1,8 +1,9 @@
 pragma solidity ^0.4.9;
 
+/*
 /// @title Math
 /// @description basic math functions
-
+*/
 contract Math {
 
     function percent(uint _numerator, uint _denominator, uint _precision) public constant returns(uint quotient) {
