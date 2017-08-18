@@ -8,88 +8,25 @@ import './Math.sol';
 
 contract CDRCalculator is Math {
 
-    function tokenPositiveRewards(
-        bool _support,
-        uint _votes,
-        uint _tokens,
-        uint _totalTokens,
-        uint _ROD,
-        bool _outcome
-        ) public constant returns (uint) {
+  function returnOnDecision(uint _currentValue, uint _startingValue) public constant returns (uint) {
+       uint rod = percent(_currentValue, _startingValue, 0);
+       return rod;
+   }
 
-        bool support = _support;
-        uint votes = _votes;
-        uint vM = voteMultiple(_tokens, _totalTokens);
-        uint ROD = _ROD;
-        bool outcome = _outcome;
+   function cagr(uint _rod, uint _vegaPeriods) public constant returns (uint) {
+       uint exp = percent(1, _vegaPeriods, 0);
+       uint cagr = _rod**exp-1;
+       return cagr;
+   }
 
-        uint amount = votes * vM * ROD;
+   function reward(uint _stake, uint _cagr) public constant returns (uint) {
+       uint reward = _stake * _cagr;
+       return reward;
+   }
 
-        if (support == true) {
-            if (outcome == true) {
-                return amount;
-            } else {
-                return 0;
-            }
-        } else if (support == false) {
-            if (outcome == false) {
-                return amount;
-            } else {
-                return 0;
-            }
-        }
-    }
+   function tokens(uint _rewards, uint _absTotalRewards, uint _tokenConversion) public constant returns (uint) {
+       uint tokens = multiplyPercentage(_tokenConversion, _rewards, _absTotalRewards);
+       return tokens;
+   }
 
-    function tokenNegativeRewards(
-        bool _support,
-        uint _votes,
-        bool _outcome
-        ) public constant returns (uint) {
-
-        bool support = _support;
-        uint votes = _votes;
-        bool outcome = _outcome;
-
-        if (support == true) {
-            if (outcome == true) {
-                return 0;
-            } else {
-                return votes;
-            }
-        } else if (support == false) {
-            if (outcome == false) {
-                return 0;
-            } else {
-                return votes;
-            }
-        }
-    }
-
-    function sumTokenRewards(
-        bool _support,
-        uint _votes,
-        uint _tokens,
-        uint _totalTokens,
-        uint _ROD,
-        bool _outcome
-        ) public constant returns (uint) {
-            uint amount = tokenPositiveRewards(
-                _support,
-                _votes,
-                _tokens,
-                _totalTokens,
-                _ROD,
-                _outcome
-                ) + tokenNegativeRewards(
-                    _support,
-                    _votes,
-                    _outcome
-                    );
-            return amount;
-        }
-
-    function tokenPayoutPercentage(uint _newTokens, uint _rewards, uint _totalRewards) public constant returns (uint) {
-        uint amount = multiplyPercentage(_newTokens, _rewards, _totalRewards);
-        return amount;
-    }
 }
