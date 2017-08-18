@@ -8,6 +8,10 @@ import './Math.sol';
 
 contract CDRCalculator is Math {
 
+  /*
+  * Currently only able to handle limited uses of positive numbers and no fractions.
+  */
+
   function returnOnDecision(uint _currentValue, uint _startingValue) public constant returns (uint) {
        uint rod = percent(_currentValue, _startingValue, 0);
        return rod;
@@ -28,5 +32,4 @@ contract CDRCalculator is Math {
        uint tokens = multiplyPercentage(_tokenConversion, _rewards, _absTotalRewards);
        return tokens;
    }
-
 }
