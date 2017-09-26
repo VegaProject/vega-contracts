@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.15;
 import "../Common.sol";
 
 import "../voting/StakeVote.sol";

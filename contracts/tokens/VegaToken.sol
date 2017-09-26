@@ -1,4 +1,4 @@
-pragma solidity ^0.4.6;
+pragma solidity ^0.4.15;
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 import "../proposals/structural/Rewards.sol";
