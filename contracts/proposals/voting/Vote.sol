@@ -7,7 +7,7 @@ contract Vote is Owned {
 
     uint yayWeight = 0;
     uint nayWeight = 0;
-    bool public voteApplied;
+    bool public voteApplied = false;
     uint quorum = 100;
 
     struct VoteInfo {
@@ -24,6 +24,7 @@ contract Vote is Owned {
     }
 
     mapping (address => VoteStatus) public statusMap;
+
 
     /**
     * This contract should check and ensure that the duration of the

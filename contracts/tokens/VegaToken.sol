@@ -9,7 +9,13 @@ import "../proposals/structural/CreatorsDeposit.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
 
-contract VegaToken is MiniMeToken(){
+/// ::TODO::
+/// 1. Hadcoded functions (updateQuorum, updateMetric)
+/// need to be generalize to an updateStructure function
+///
+/// 2. addressed used to updateStructure must be approved. This should be the only HARDCODED
+///    voting process. 
+contract VegaToken is MiniMeToken {
 
 
     function VegaToken(address _factory)
@@ -21,7 +27,8 @@ contract VegaToken is MiniMeToken(){
         18,
         "Vga",
         false
-    ){
+    )
+    {
 
     }
 
@@ -44,7 +51,7 @@ contract VegaToken is MiniMeToken(){
         StandardVote vote = StandardVote(quorumContract.vote());
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
-        require(vote.voteApplied());
+        require(!vote.voteApplied());
         vote.applyVote();
         quorum = quorumContract.quorum();
     }
@@ -54,7 +61,7 @@ contract VegaToken is MiniMeToken(){
         StandardVote vote = StandardVote(metricContract.vote());
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
-        require(vote.voteApplied());
+        require(!vote.voteApplied());
         vote.applyVote();
         metric = metricContract.metric();
     }
@@ -64,7 +71,7 @@ contract VegaToken is MiniMeToken(){
         StandardVote vote = StandardVote(feeContract.vote());
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
-        require(vote.voteApplied());
+        require(!vote.voteApplied());
         vote.applyVote();
         fee = feeContract.fee();
         multiple = feeContract.multiple();
@@ -75,7 +82,7 @@ contract VegaToken is MiniMeToken(){
         StandardVote vote = StandardVote(depositContract.vote());
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
-        require(vote.voteApplied());
+        require(!vote.voteApplied());
         vote.applyVote();
         deposit = depositContract.deposit();
     }

@@ -25,12 +25,13 @@ contract StandardVote is Vote {
     function vote(bool inSupport) public {
         bool hasVoted;
         require(common.openForVoting());
-        VoteStatus memory status = statusMap[msg.sender];
+        VoteStatus storage status = statusMap[msg.sender];
         if (hasVoted = status.hasVoted) {
             votes[status.voteIndex].inSupport = inSupport;
         } else {
-            votes.push(VoteInfo(msg.sender, inSupport, votes.length));
-            status = VoteStatus(true, votes.length - 1);
+            votes.push(VoteInfo(msg.sender, inSupport, vga.balanceOf(msg.sender)));
+            status.hasVoted = true;
+            status.voteIndex = votes.length - 1;
             statusMap[msg.sender] = status;
         }
     }
@@ -47,5 +48,4 @@ contract StandardVote is Vote {
         }
         return true;   
     }
-
 }
