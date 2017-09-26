@@ -19,17 +19,17 @@ contract CDRCalculator is Math {
 
    function cagr(uint _rod, uint _vegaPeriods) public constant returns (uint) {
        uint exp = percent(1, _vegaPeriods, 0);
-       uint cagr = _rod**exp-1;
-       return cagr;
+       uint cagrV = _rod**exp-1;
+       return cagrV;
    }
 
    function reward(uint _stake, uint _cagr) public constant returns (uint) {
-       uint reward = _stake * _cagr;
-       return reward;
+       uint rewardV = _stake * _cagr;
+       return rewardV;
    }
 
    function tokens(uint _rewards, uint _absTotalRewards, uint _tokenConversion) public constant returns (uint) {
-       uint tokens = multiplyPercentage(_tokenConversion, _rewards, _absTotalRewards);
-       return tokens;
+       uint tokensV = multiplyPercentage(_tokenConversion, _rewards, _absTotalRewards);
+       return tokensV;
    }
 }

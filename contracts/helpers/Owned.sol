@@ -26,6 +26,7 @@ contract Owned {
     /// modifier
     modifier onlyOwner {
         require (msg.sender != owner);
+        _;
     }
 
     address public owner;
