@@ -50,8 +50,8 @@ contract VegaToken is MiniMeToken {
         Quorum quorumContract = Quorum(_address);
         StandardVote vote = StandardVote(quorumContract.vote());
         vote.updateQuorum(quorum);
-        require(vote.isVotePassed());
-        require(!vote.voteApplied());
+        //require(vote.isVotePassed());
+        //require(!vote.voteApplied());
         vote.applyVote();
         quorum = quorumContract.quorum();
     }

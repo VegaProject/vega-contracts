@@ -13,7 +13,7 @@ let Quorum = artifacts.require("Quorum");
 
 const verbose = false;
 
-contract("Standard Vote", (accounts) => {
+contract("Quorum", (accounts) => {
 
     let factory;
     let vegaCampaign;
@@ -69,7 +69,7 @@ contract("Standard Vote", (accounts) => {
       )
     });
 
-    it("should send funds to the vegaCampaign", async () => {
+    it("should pass a quorum and change the VegaToken Quorum", async () => {
         let senderOne = accounts[0]
         let senderTwo = accounts[1]        
         // Use balanceOfAt as current MiniMeToken does not support balance()        
@@ -89,5 +89,8 @@ contract("Standard Vote", (accounts) => {
         senderOneVoteInfo[2].toNumber().should.be.equal(valueOne.toNumber())
         let voteResult = await vote.isVotePassed()
         voteResult.should.be.true
+        await vega.updateQuorum(quorum.address)
+        let currentQuorum = await vega.quorum()
+        currentQuorum.toNumber().should.be.equal(60)
     })
 });

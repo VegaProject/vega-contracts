@@ -18,4 +18,4 @@ Only Pull Requests that close a specific issue from the community are accepted, 
 
 ## Questions
 
-For any further questions please leage a message for us in our Rocket Chat.
+For any further questions please leave a message for us in our Rocket Chat.
