@@ -16,18 +16,22 @@ contract Common is Owned {
     uint startTime;
     enum ProposalStates { pending, failed, approved, denied }
     ProposalStates state = ProposalStates.pending;
+    address public vote;
+    
     /**
     * @dev Main constructor for a Common proposal
     */
     function Common (
         bytes32 _name,
         string _description,
-        uint _duration
+        uint _duration,
+        address _vote
     ) {
         name = _name;
         description = _description;
         duration = _duration;
         startTime = block.timestamp;
+        vote = _vote;        
     }
 
     /**
@@ -40,6 +44,7 @@ contract Common is Owned {
         require(state == ProposalStates.approved);
         return true;
     }
+    function execute() public;
 
     function openForVoting() public constant returns (bool stillOpen) {
         return (block.timestamp < startTime + duration);

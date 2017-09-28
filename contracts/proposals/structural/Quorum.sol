@@ -13,14 +13,12 @@ import "../voting/StandardVote.sol";
 contract Quorum is Common {
 
     uint public quorum;
-    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
 	*/
     function Quorum (
         uint _quorum,
-        address _vote,
         bytes32 _name,
         string _description,
         uint _duration               
@@ -32,7 +30,6 @@ contract Quorum is Common {
     )
     {
         quorum = _quorum;
-        vote = _vote;
     }
 
     /**

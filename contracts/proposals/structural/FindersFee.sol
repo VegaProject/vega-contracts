@@ -16,7 +16,6 @@ contract FindersFee is Common {
 
     uint public fee;
     uint  public multiple;
-    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
@@ -29,7 +28,6 @@ contract FindersFee is Common {
     {
         fee = _fee;
         multiple = _multiple;
-        vote = _vga;
     }
 
     /**

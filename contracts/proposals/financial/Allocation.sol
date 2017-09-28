@@ -2,6 +2,7 @@ pragma solidity ^0.4.15;
 import "../Common.sol";
 
 import "../voting/StakeVote.sol";
+import "../../../node_modules/zeppelin-solidity/contracts/token/ERC20Basic.sol";
 
 
 /**@title Allocation Proposal
@@ -39,5 +40,6 @@ contract Allocation is Common {
       * @dev Function used to cause the contract to execute.
       */
       function execute() public {
+          ERC20Basic token = ERC20Basic()
       }
 }

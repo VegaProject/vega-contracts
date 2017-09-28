@@ -21,11 +21,9 @@ contract CreatorsDeposit is Common {
 	*/
     function CreatorsDeposit(
         uint _deposit,
-        address _vga        
 	)
     {
         deposit = _deposit;
-        vote = _vga;
     }
 
     /**

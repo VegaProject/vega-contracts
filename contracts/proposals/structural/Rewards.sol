@@ -15,7 +15,6 @@ contract Rewards is Common {
     uint public reporting;
     uint public vestingEvent;
     uint public vesting;
-    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
@@ -24,15 +23,13 @@ contract Rewards is Common {
         uint _localEvent,
         uint _reporting,
         uint _vestingEvent,
-        uint _vesting,
-        address _vga
+        uint _vesting
 	)
     {
         localEvent = _localEvent;
         reporting = _reporting;
         vestingEvent = _vestingEvent;
         vesting = _vesting;
-        vote = _vga;
     }
 
 }

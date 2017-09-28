@@ -13,18 +13,14 @@ import "../voting/StandardVote.sol";
 contract Metric is Common {
 
     address public metric;
-    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
 	*/
     function Metric (
-        address _metric,
-        address _vga
-	)
-    {
+        address _metric
+	) {
         metric = _metric;
-        vote = _vga;
     }
 
     /**

@@ -45,7 +45,9 @@ contract VegaToken is MiniMeToken {
     function updateRewards(address _address) public {
         rewards = _address;
     }
-
+    // All of these functions need to be generalized; in order to do this we
+    // need to create a mapping for structural properties. This will also allow
+    // For the addition of structural properties at a later date.
     function updateQuorum(address _address) {
         Quorum quorumContract = Quorum(_address);
         StandardVote vote = StandardVote(quorumContract.vote());
@@ -85,5 +87,15 @@ contract VegaToken is MiniMeToken {
         require(!vote.voteApplied());
         vote.applyVote();
         deposit = depositContract.deposit();
+    }
+
+    function executeProposal(address _address) {
+        Common common = Common(_address);
+        Vote vote = StandardVote(common.vote());
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(!vote.voteApplied());
+        vote.applyVote();
+        deposit = common.execute();
     }
 }
