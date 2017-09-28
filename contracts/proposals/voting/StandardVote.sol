@@ -7,10 +7,8 @@ import "../Common.sol";
 contract StandardVote is Vote {
 
     VegaToken vga;
-    Common common;
 
-    function StandardVote(address _common, address _vga){
-        common = Common(_common);
+    function StandardVote(address _vga) {
         vga = VegaToken(_vga);
     }
 
@@ -24,7 +22,6 @@ contract StandardVote is Vote {
     */
     function vote(bool inSupport) public {
         bool hasVoted;
-        require(common.openForVoting());
         VoteStatus storage status = statusMap[msg.sender];
         if (hasVoted = status.hasVoted) {
             votes[status.voteIndex].inSupport = inSupport;

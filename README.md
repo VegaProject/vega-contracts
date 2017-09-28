@@ -24,10 +24,10 @@ The system is designed such that any contract address can be supplied for any pr
    +---------+                                       |           |  |
    |StakeVote+------+                                V           |  |
    +---------+      |            +----+           +--------+     |  |
-                    +--+--IsA+--->Vote|      +--->+Proposal|     |  |
-                    |  |         +----+      |    +--------+     |  |
-+------------+      |  |                     |                   |  |
-|StandardVote+------+  +--HasA------+--------+                   |  |
+                    +--+--IsA+--->Vote|<--HasA ---+Proposal|     |  |
+                    |  |         +----+           +--------+     |  |
++------------+      |  |                                         |  |
+|StandardVote+------+  +--HasA------+                            |  |
 +------------+                      |                            |  |
                                     v                            |  |
   +------------+              +-----+---+                        |  |

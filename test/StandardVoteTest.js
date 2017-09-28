@@ -49,24 +49,24 @@ contract("Standard Vote", (accounts) => {
       )
       vega.changeController(vegaCampaign.address)
 
+      vote = await StandardVote.new.apply(
+        this,
+        [
+          vega.address
+        ]
+      )
+      //await vote.changeOwner(vega.address)
       quorum = await Quorum.new.apply(
         this,
         [
           60,
-          vega.address,
+          vote.address,
           "TEST",
           "This is a test",
           TIME_INCREMENT
         ]
       )
 
-      vote = await StandardVote.new.apply(
-        this,
-        [
-          quorum.address,
-          vega.address
-        ]
-      )
     });
 
     it("should send funds to the vegaCampaign", async () => {

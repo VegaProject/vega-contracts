@@ -38,7 +38,7 @@ contract Vote is Owned {
 
     function countVote() public returns (bool counted);
 
-    function updateQuorum(uint _quorum) onlyOwner {
+    function updateQuorum(uint _quorum) {
         quorum = _quorum;
     }
 

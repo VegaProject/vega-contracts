@@ -20,7 +20,7 @@ contract Quorum is Common {
 	*/
     function Quorum (
         uint _quorum,
-        address _vga,
+        address _vote,
         bytes32 _name,
         string _description,
         uint _duration               
@@ -32,7 +32,7 @@ contract Quorum is Common {
     )
     {
         quorum = _quorum;
-        vote = _vga;
+        vote = _vote;
     }
 
     /**
