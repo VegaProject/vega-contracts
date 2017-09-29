@@ -17,7 +17,7 @@ contract("Standard Vote", (accounts) => {
 
     let factory;
     let vegaCampaign;
-    let vega, vote, quorum;
+    let vega, vote;
     let now = web3.eth.getBlock(web3.eth.blockNumber).timestamp;
     const TIME_INCREMENT = 10000;
     const TRANSFER_ONE = 10000;
@@ -55,18 +55,6 @@ contract("Standard Vote", (accounts) => {
           vega.address
         ]
       )
-      //await vote.changeOwner(vega.address)
-      quorum = await Quorum.new.apply(
-        this,
-        [
-          60,
-          vote.address,
-          "TEST",
-          "This is a test",
-          TIME_INCREMENT
-        ]
-      )
-
     });
 
     it("should send funds to the vegaCampaign", async () => {

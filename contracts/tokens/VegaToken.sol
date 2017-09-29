@@ -1,14 +1,11 @@
 pragma solidity ^0.4.15;
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
-import "../proposals/structural/Rewards.sol";
 import "../proposals/structural/Quorum.sol";
-import "../proposals/structural/Metric.sol";
-import "../proposals/structural/FindersFee.sol";
-import "../proposals/structural/CreatorsDeposit.sol";
 import "../proposals/financial/Financial.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
+import "../proposals/voting/Vote.sol";
 
 /// ::TODO::
 /// 1. Hadcoded functions (updateQuorum, updateMetric)
@@ -33,70 +30,30 @@ contract VegaToken is MiniMeToken {
 
     }
 
-    uint public localEvent;
-    uint public  reporting;
-    uint public  vestingEvent;
-    uint public  vesting;
-    uint public quorum;
-    address public  metric;
-    uint public  fee;
-    uint public  multiple;
-    uint public  deposit;
-    address rewards;
-    function updateRewards(address _address) public {
-        rewards = _address;
-    }
-    // All of these functions need to be generalized; in order to do this we
-    // need to create a mapping for structural properties. This will also allow
-    // For the addition of structural properties at a later date.
-    function updateQuorum(address _address) {
-        Quorum quorumContract = Quorum(_address);
-        StandardVote vote = StandardVote(quorumContract.vote());
-        vote.updateQuorum(quorum);
-        require(vote.isVotePassed());
-        require(!vote.voteApplied());
-        vote.applyVote();
-        quorum = quorumContract.quorum();
-    }
-
-    function updateMetric(address _address) {
-        Metric metricContract = Metric(_address);
-        StandardVote vote = StandardVote(metricContract.vote());
-        vote.updateQuorum(quorum);
-        require(vote.isVotePassed());
-        require(!vote.voteApplied());
-        vote.applyVote();
-        metric = metricContract.metric();
-    }
-
-    function updateFee(address _address) {
-        FindersFee feeContract = FindersFee(_address);
-        StandardVote vote = StandardVote(feeContract.vote());
-        vote.updateQuorum(quorum);
-        require(vote.isVotePassed());
-        require(!vote.voteApplied());
-        vote.applyVote();
-        fee = feeContract.fee();
-        multiple = feeContract.multiple();
-    }
-
-    function updateDeposit(address _address) {
-        CreatorsDeposit depositContract = CreatorsDeposit(_address);
-        StandardVote vote = StandardVote(depositContract.vote());
-        vote.updateQuorum(quorum);
-        require(vote.isVotePassed());
-        require(!vote.voteApplied());
-        vote.applyVote();
-        deposit = depositContract.deposit();
-    }
+    uint public quorum = 100;
 
     function executeFinancialProposal(address _address) {
-        Financial fin = Financial(_address);
-        Vote vote = StandardVote(common.vote());
+        Financial proposal = Financial(_address);
+        Vote vote = Vote(proposal.vote());
+        // Always update the quourum before checking a vote
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
         require(!vote.voteApplied());
         vote.applyVote();
-        deposit = common.execute();
+        address addr = address(this);
+        proposal.execute(addr);
     }
+
+    function executeQuorum(address _address) {
+        Quorum proposal = Quorum(_address);
+        Vote vote = Vote(proposal.vote());
+        // Always update the quourum before checking a vote
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(!vote.voteApplied());
+        vote.applyVote();
+        quorum = proposal.quorum();
+    }
+
+
 }

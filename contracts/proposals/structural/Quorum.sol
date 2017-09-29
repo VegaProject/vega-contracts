@@ -2,6 +2,7 @@ pragma solidity ^0.4.15;
 import "../Common.sol";
 import "../voting/StandardVote.sol";
 
+
 /**@title Quorum Proposal 
 * What: Quorum Proposals are used to establish the minimum amount of tokens needed to execute an proposal.
 * Why: A dynamic quorum is necessary because at some point Vega may want to make decisions quickly and 
@@ -13,29 +14,29 @@ import "../voting/StandardVote.sol";
 contract Quorum is Common {
 
     uint public quorum;
+    address public vote;
 
 	/**
 	* @dev Main constructor for a Common proposal
 	*/
     function Quorum (
         uint _quorum,
-        bytes32 _name,
-        string _description,
+        address _vote,
         uint _duration               
 	)
     Common(
-        _name,
-        _description,
         _duration        
     )
     {
         quorum = _quorum;
+        vote = _vote;
     }
+
 
     /**
     * This function needs to handle any checks before the contract can be executed.
     * @dev Function used to cause the contract to execute.
     */
-    function execute() public {
+    function execute(address _vga) public{
     }
 }

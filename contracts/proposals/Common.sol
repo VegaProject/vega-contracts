@@ -1,6 +1,5 @@
 pragma solidity ^0.4.15;
 
-import "../helpers/Owned.sol";
 
 /**@title Common Proposal
 * This proposal is meant to hold the minimum parameters and functions needed
@@ -9,29 +8,21 @@ import "../helpers/Owned.sol";
 * ~~Potential Issues~~
 * Need to handle how vote counting is achieved.
 */
-contract Common is Owned {
-    bytes32 name;
-    string description;
+contract Common {
+    
     uint duration;
     uint startTime;
     enum ProposalStates { pending, failed, approved, denied }
     ProposalStates state = ProposalStates.pending;
-    address public vote;
     
     /**
     * @dev Main constructor for a Common proposal
     */
     function Common (
-        bytes32 _name,
-        string _description,
-        uint _duration,
-        address _vote
+        uint _duration
     ) {
-        name = _name;
-        description = _description;
         duration = _duration;
         startTime = block.timestamp;
-        vote = _vote;        
     }
 
     /**

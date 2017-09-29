@@ -55,15 +55,10 @@ contract("Quorum", (accounts) => {
           vega.address
         ]
       )
-      quorum = await Quorum.new.apply(
-        this,
-        [
+      quorum = await Quorum.new(
           60,
           vote.address,
-          "TEST",
-          "This is a test",
           TIME_INCREMENT
-        ]
       )
 
     });
@@ -88,7 +83,7 @@ contract("Quorum", (accounts) => {
         senderOneVoteInfo[2].toNumber().should.be.equal(valueOne.toNumber())
         let voteResult = await vote.isVotePassed()
         voteResult.should.be.true
-        await vega.updateQuorum(quorum.address)
+        await vega.executeQuorum(quorum.address)
         let currentQuorum = await vega.quorum()
         currentQuorum.toNumber().should.be.equal(60)
     })

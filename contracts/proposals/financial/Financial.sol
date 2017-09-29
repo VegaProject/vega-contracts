@@ -20,7 +20,6 @@ contract Financial is Common {
 
   	/**
   	* @dev Main constructor for a Common proposal
-      * @param _vga The address for the VegaToken
   	*/
       function Financial(
           address _contract,
