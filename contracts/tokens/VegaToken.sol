@@ -6,6 +6,7 @@ import "../proposals/structural/Quorum.sol";
 import "../proposals/structural/Metric.sol";
 import "../proposals/structural/FindersFee.sol";
 import "../proposals/structural/CreatorsDeposit.sol";
+import "../proposals/financial/Financial.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
 
@@ -89,8 +90,8 @@ contract VegaToken is MiniMeToken {
         deposit = depositContract.deposit();
     }
 
-    function executeProposal(address _address) {
-        Common common = Common(_address);
+    function executeFinancialProposal(address _address) {
+        Financial fin = Financial(_address);
         Vote vote = StandardVote(common.vote());
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());

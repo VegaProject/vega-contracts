@@ -44,7 +44,7 @@ contract Common is Owned {
         require(state == ProposalStates.approved);
         return true;
     }
-    function execute() public;
+    function execute(address _vga) public;
 
     function openForVoting() public constant returns (bool stillOpen) {
         return (block.timestamp < startTime + duration);

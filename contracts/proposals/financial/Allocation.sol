@@ -1,9 +1,8 @@
 pragma solidity ^0.4.15;
 import "../Common.sol";
 
-import "../voting/StakeVote.sol";
-import "../../../node_modules/zeppelin-solidity/contracts/token/ERC20Basic.sol";
-
+import "../../../node_modules/minimetoken/contracts/MiniMeToken.sol";
+import "./Financial.sol";
 
 /**@title Allocation Proposal
 * Allocation proposals send tokens held by Vega to another contract or address. This contract could be a token sale,
@@ -11,35 +10,17 @@ import "../../../node_modules/zeppelin-solidity/contracts/token/ERC20Basic.sol";
 *
 * ~~Potential Issues~~
 */
-contract Allocation is Common {
+contract Allocation is Financial {
 
-      address public to;
-      address public token;
-      uint public amount;
-      address public vote;
-
-  	/**
-  	* @dev Main constructor for a Common proposal
-      * @param _vga The address for the VegaToken
-  	*/
-      function Allocation(
-          address _contract,
-          address _token,
-          uint _amount,
-          address _vga
-  	)
-      {
-          to = _contract;
-          token = _token;
-          amount = _amount;
-          vote = _vga;
-      }
 
       /**
       * This function needs to handle any checks before the contract can be executed.
+      * This is function relies on the calling token
       * @dev Function used to cause the contract to execute.
       */
-      function execute() public {
-          ERC20Basic token = ERC20Basic()
+      function execute(address _vga) public {
+          MiniMeToken txToken = MiniMeToken(token);
+          txToken.transferFrom(_vga, to, amount);
+
       }
 }
