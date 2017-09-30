@@ -10,7 +10,6 @@ let MiniMeToken = artifacts.require("MiniMeToken");
 let StandardVote = artifacts.require("StandardVote");
 let Quorum = artifacts.require("Quorum");
 
-
 const verbose = false;
 
 contract("Standard Vote", (accounts) => {
@@ -57,7 +56,7 @@ contract("Standard Vote", (accounts) => {
       )
     });
 
-    it("should send funds to the vegaCampaign", async () => {
+    it("should a standard vote and make sure voting works", async () => {
         let senderOne = accounts[0]
         let senderTwo = accounts[1]        
         // Use balanceOfAt as current MiniMeToken does not support balance()        

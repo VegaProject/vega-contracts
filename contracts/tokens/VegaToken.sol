@@ -16,6 +16,7 @@ import "../proposals/voting/Vote.sol";
 contract VegaToken is MiniMeToken {
 
 
+
     function VegaToken(address _factory)
     MiniMeToken(
         _factory,
@@ -24,7 +25,7 @@ contract VegaToken is MiniMeToken {
         "Vga",
         18,
         "Vga",
-        false
+        true
     )
     {
 
@@ -35,12 +36,14 @@ contract VegaToken is MiniMeToken {
     function executeFinancialProposal(address _address) {
         Financial proposal = Financial(_address);
         Vote vote = Vote(proposal.vote());
-        // Always update the quourum before checking a vote
+        //Always update the quourum before checking a vote
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
         require(!vote.voteApplied());
         vote.applyVote();
         address addr = address(this);
+        MiniMeToken token = MiniMeToken(proposal.token());
+        token.approve(_address, proposal.amount());
         proposal.execute(addr);
     }
 

@@ -13,14 +13,28 @@ import "./Financial.sol";
 contract Allocation is Financial {
 
 
-      /**
-      * This function needs to handle any checks before the contract can be executed.
-      * This is function relies on the calling token
-      * @dev Function used to cause the contract to execute.
-      */
-      function execute(address _vga) public {
-          MiniMeToken txToken = MiniMeToken(token);
-          txToken.transferFrom(_vga, to, amount);
+      function Allocation(
+          uint _duration,
+          address _contract,
+          address _token,
+          uint _amount,
+          address _vote
+  	)    
+    Financial(
+        _duration,
+        _contract,
+        _token,
+        _amount,
+        _vote
+    ){}
 
-      }
+    /**
+    * This function needs to handle any checks before the contract can be executed.
+    * This is function relies on the calling token
+    * @dev Function used to cause the contract to execute.
+    */
+    function execute(address _vga) public {
+        MiniMeToken txToken = MiniMeToken(token);
+        txToken.transferFrom(_vga, to, amount);
+    }
 }

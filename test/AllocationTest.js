@@ -8,12 +8,12 @@ let VegaCampaign = artifacts.require("VegaCampaign");
 let MiniMeTokenFactory = artifacts.require("MiniMeTokenFactory");
 let MiniMeToken = artifacts.require("MiniMeToken");
 let StandardVote = artifacts.require("StandardVote");
-let Quorum = artifacts.require("Quorum");
+let Allocation = artifacts.require("Allocation");
 
 
 const verbose = false;
 
-contract("Quorum", (accounts) => {
+contract("Allocation", (accounts) => {
 
     let factory;
     let vegaCampaign;
@@ -23,7 +23,6 @@ contract("Quorum", (accounts) => {
     const TRANSFER_ONE = 10000;
     const TRANSFER_TWO = 12345;
     const CAMPAIGN_CAP = 1000000;
-
 
     let campaignDeployParams = 
     (vault, token) => 
@@ -36,34 +35,36 @@ contract("Quorum", (accounts) => {
     ]
 
     before(async() => {
-      factory = await MiniMeTokenFactory.new.apply(
-        this  
-      )
-      vega = await VegaToken.new.apply(
-        this,
-        [factory.address]
-      )
-      vegaCampaign = await VegaCampaign.new.apply(
-        this,
-        campaignDeployParams(accounts[0], vega.address)
-      )
-      vega.changeController(vegaCampaign.address)
+        factory = await MiniMeTokenFactory.new.apply(
+            this  
+        )
+        vega = await VegaToken.new.apply(
+            this,
+            [factory.address]
+        )
+        vegaCampaign = await VegaCampaign.new.apply(
+            this,
+            campaignDeployParams(accounts[0], vega.address)
+        )
+        vega.changeController(vegaCampaign.address)
 
-      vote = await StandardVote.new.apply(
-        this,
+        vote = await StandardVote.new.apply(
+            this,
         [
-          vega.address
+            vega.address
         ]
-      )
-      quorum = await Quorum.new(
-          60,
-          vote.address,
-          TIME_INCREMENT
-      )
+        )
+        allocation = await Allocation.new(
+            TIME_INCREMENT,
+            accounts[4],
+            vega.address,
+            TRANSFER_ONE,
+            vote.address
+        )
 
     });
 
-    it("should pass a quorum and change the VegaToken Quorum", async () => {
+    it("should pass an execute an Allocation proposal", async () => {
         let senderOne = accounts[0]
         let senderTwo = accounts[1]        
         // Use balanceOfAt as current MiniMeToken does not support balance()        
@@ -78,13 +79,16 @@ contract("Quorum", (accounts) => {
         await vote.vote(true, {from: senderOne})
         await vote.countVote()
 
+        await vega.transfer(vega.address, TRANSFER_ONE, {from: senderOne} )
+
         let senderOneVoteIndex = await vote.statusMap(senderOne)
         let senderOneVoteInfo = await vote.votes(senderOneVoteIndex[1].toNumber())
         senderOneVoteInfo[2].toNumber().should.be.equal(valueOne.toNumber())
         let voteResult = await vote.isVotePassed()
         voteResult.should.be.true
-        await vega.executeQuorum(quorum.address)
-        let currentQuorum = await vega.quorum()
-        currentQuorum.toNumber().should.be.equal(60)
+        await vega.executeFinancialProposal(allocation.address)        
+        let allocationValue = await vega.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
+        
+        allocationValue.toNumber().should.be.equal(TRANSFER_ONE)
     })
 });
