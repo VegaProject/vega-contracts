@@ -19,8 +19,7 @@
     "ethereum",
     "truffle",
     "ether",
-    "funding",
-    "prediction-market"
+    "funding"
   ],
   "author": "George K. Van Hoomissen & Arthur Lunn",
   "license": "MIT",

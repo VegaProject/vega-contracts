@@ -56,14 +56,13 @@ contract VegaCampaign is TokenController, Owned {
         address _tokenAddress
 
     ) {
-            require() (
+            require(
             !(_endFundingTime < now) &&                // Cannot end in the past
             !(_endFundingTime <= _startFundingTime) &&
             !(_vaultAddress == 0)                     // To prevent burning ETH
             );
         startFundingTime = _startFundingTime;
         endFundingTime = _endFundingTime;
-        maximumFunding = _maximumFunding;
         vaultAddress = _vaultAddress;
         tokenContract = MiniMeToken(_tokenAddress);// The Deployed Token Contract
     }

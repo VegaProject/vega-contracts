@@ -30,7 +30,6 @@ contract("Standard Vote", (accounts) => {
     [
         now,
         now + TIME_INCREMENT,
-        CAMPAIGN_CAP,
         vault,
         token
     ]
