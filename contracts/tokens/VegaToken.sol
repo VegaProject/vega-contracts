@@ -1,15 +1,20 @@
-pragma solidity ^0.4.6;
+pragma solidity ^0.4.15;
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
-import "../proposals/structural/Rewards.sol";
 import "../proposals/structural/Quorum.sol";
-import "../proposals/structural/Metric.sol";
-import "../proposals/structural/FindersFee.sol";
-import "../proposals/structural/CreatorsDeposit.sol";
+import "../proposals/financial/Financial.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
+import "../proposals/voting/Vote.sol";
 
-contract VegaToken is MiniMeToken(){
+/// ::TODO::
+/// 1. Hadcoded functions (updateQuorum, updateMetric)
+/// need to be generalize to an updateStructure function
+///
+/// 2. addressed used to updateStructure must be approved. This should be the only HARDCODED
+///    voting process. 
+contract VegaToken is MiniMeToken {
+
 
 
     function VegaToken(address _factory)
@@ -20,63 +25,38 @@ contract VegaToken is MiniMeToken(){
         "Vga",
         18,
         "Vga",
-        false
-    ){
+        true
+    )
+    {
 
     }
 
-    uint public localEvent;
-    uint public  reporting;
-    uint public  vestingEvent;
-    uint public  vesting;
-    uint public quorum;
-    address public  metric;
-    uint public  fee;
-    uint public  multiple;
-    uint public  deposit;
-    address rewards;
-    function updateRewards(address _address) public {
-        rewards = _address;
-    }
+    uint public quorum = 100;
 
-    function updateQuorum(address _address) {
-        Quorum quorumContract = Quorum(_address);
-        StandardVote vote = StandardVote(quorumContract.vote());
+    function executeFinancialProposal(address _address) {
+        Financial proposal = Financial(_address);
+        Vote vote = Vote(proposal.vote());
+        //Always update the quourum before checking a vote
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
-        require(vote.voteApplied());
+        require(!vote.voteApplied());
         vote.applyVote();
-        quorum = quorumContract.quorum();
+        address addr = address(this);
+        MiniMeToken token = MiniMeToken(proposal.token());
+        token.approve(_address, proposal.amount());
+        proposal.execute(addr);
     }
 
-    function updateMetric(address _address) {
-        Metric metricContract = Metric(_address);
-        StandardVote vote = StandardVote(metricContract.vote());
+    function executeQuorum(address _address) {
+        Quorum proposal = Quorum(_address);
+        Vote vote = Vote(proposal.vote());
+        // Always update the quourum before checking a vote
         vote.updateQuorum(quorum);
         require(vote.isVotePassed());
-        require(vote.voteApplied());
+        require(!vote.voteApplied());
         vote.applyVote();
-        metric = metricContract.metric();
+        quorum = proposal.quorum();
     }
 
-    function updateFee(address _address) {
-        FindersFee feeContract = FindersFee(_address);
-        StandardVote vote = StandardVote(feeContract.vote());
-        vote.updateQuorum(quorum);
-        require(vote.isVotePassed());
-        require(vote.voteApplied());
-        vote.applyVote();
-        fee = feeContract.fee();
-        multiple = feeContract.multiple();
-    }
 
-    function updateDeposit(address _address) {
-        CreatorsDeposit depositContract = CreatorsDeposit(_address);
-        StandardVote vote = StandardVote(depositContract.vote());
-        vote.updateQuorum(quorum);
-        require(vote.isVotePassed());
-        require(vote.voteApplied());
-        vote.applyVote();
-        deposit = depositContract.deposit();
-    }
 }

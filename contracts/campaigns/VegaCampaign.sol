@@ -1,4 +1,4 @@
-pragma solidity ^0.4.6;
+pragma solidity ^0.4.15;
 
 /*
     Copyright 2017, Jordi Baylina
@@ -59,13 +59,11 @@ contract VegaCampaign is TokenController, Owned {
         address _tokenAddress
 
     ) {
-        if ((_endFundingTime < now) ||                // Cannot end in the past
-            (_endFundingTime <= _startFundingTime) ||
-            (_maximumFunding > 10000 ether) ||        // The Beta is limited
-            (_vaultAddress == 0))                     // To prevent burning ETH
-            {
-            throw;
-            }
+        require (!(_endFundingTime < now) &&                // Cannot end in the past
+            !(_endFundingTime <= _startFundingTime) &&
+            !(_maximumFunding > 10000 ether) &&        // The Beta is limited
+            !(_vaultAddress == 0));                    // To prevent burning ETH
+
         startFundingTime = _startFundingTime;
         endFundingTime = _endFundingTime;
         maximumFunding = _maximumFunding;
@@ -125,27 +123,20 @@ contract VegaCampaign is TokenController, Owned {
     function doPayment(address _owner) internal {
 
 // First check that the Campaign is allowed to receive this donation
-        if ((now<startFundingTime) ||
-            (now>endFundingTime) ||
-            (msg.value == 0) ||
-            (totalCollected + msg.value > maximumFunding))
-        {
-            throw;
-        }
+        require (!(now<startFundingTime) &&
+            !(now>endFundingTime) &&
+            !(msg.value == 0) &&
+            !(totalCollected + msg.value > maximumFunding));
 
 //Track how much the Campaign has collected
         totalCollected += msg.value;
 
 //Send the ether to the vault
-        if (!vaultAddress.send(msg.value)) {
-            throw;
-        }
+        require (vaultAddress.send(msg.value));
 
 // Creates an equal amount of tokens as ether sent. The new tokens are created
 //  in the `_owner` address
-        if (!tokenContract.generateTokens(_owner, msg.value)) {
-            throw;
-        }
+        require (tokenContract.generateTokens(_owner, msg.value));
 
         return;
     }
@@ -155,8 +146,7 @@ contract VegaCampaign is TokenController, Owned {
 ///  Campaign from receiving more ether
 /// @dev `finalizeFunding()` can only be called after the end of the funding period.
     function finalizeFunding() {
-        if (now < endFundingTime)
-            throw;
+        require (now >= endFundingTime);
         tokenContract.changeController(0);
     }
 

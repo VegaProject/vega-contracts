@@ -1,4 +1,4 @@
-pragma solidity ^0.4.6;
+pragma solidity ^0.4.15;
 
 
 /*
@@ -25,8 +25,7 @@ contract Owned {
     /// @dev `owner` is the only address that can call a function with this
     /// modifier
     modifier onlyOwner {
-        if (msg.sender != owner)
-            throw; 
+        require (msg.sender != owner);
         _;
     }
 
