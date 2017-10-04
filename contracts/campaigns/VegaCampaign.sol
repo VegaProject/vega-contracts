@@ -19,7 +19,7 @@ pragma solidity ^0.4.15;
 
 /// @author Jordi Baylina, Arthur Lunn
 /// @dev This contract controls the issuance of tokens for the VegaToken Contract.
-/// Going forward this contract needs to be modified to adhear to the VegaToken campaign parameters 
+/// Going forward this contract needs to be modified to adhear to the VegaToken campaign parameters. 
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 
