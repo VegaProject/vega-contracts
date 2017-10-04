@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.15;
 import "./Vote.sol";
 import "../../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 import "../../tokens/VegaToken.sol";

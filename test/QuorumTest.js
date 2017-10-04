@@ -10,13 +10,14 @@ let MiniMeToken = artifacts.require("MiniMeToken");
 let StandardVote = artifacts.require("StandardVote");
 let Quorum = artifacts.require("Quorum");
 
+
 const verbose = false;
 
-contract("Standard Vote", (accounts) => {
+contract("Quorum", (accounts) => {
 
     let factory;
     let vegaCampaign;
-    let vega, vote;
+    let vega, vote, quorum;
     let now = web3.eth.getBlock(web3.eth.blockNumber).timestamp;
     const TIME_INCREMENT = 10000;
     const TRANSFER_ONE = 10000;
@@ -29,6 +30,7 @@ contract("Standard Vote", (accounts) => {
     [
         now,
         now + TIME_INCREMENT,
+        CAMPAIGN_CAP,
         vault,
         token
     ]
@@ -53,9 +55,15 @@ contract("Standard Vote", (accounts) => {
           vega.address
         ]
       )
+      quorum = await Quorum.new(
+          60,
+          vote.address,
+          TIME_INCREMENT
+      )
+
     });
 
-    it("should a standard vote and make sure voting works", async () => {
+    it("should pass a quorum and change the VegaToken Quorum", async () => {
         let senderOne = accounts[0]
         let senderTwo = accounts[1]        
         // Use balanceOfAt as current MiniMeToken does not support balance()        
@@ -75,5 +83,8 @@ contract("Standard Vote", (accounts) => {
         senderOneVoteInfo[2].toNumber().should.be.equal(valueOne.toNumber())
         let voteResult = await vote.isVotePassed()
         voteResult.should.be.true
+        await vega.executeQuorum(quorum.address)
+        let currentQuorum = await vega.quorum()
+        currentQuorum.toNumber().should.be.equal(60)
     })
 });

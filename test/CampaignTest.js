@@ -31,7 +31,7 @@ contract("Vega", (accounts) => {
         token
     ]
 
-    before(async() => {
+    before( async () => {
       factory = await MiniMeTokenFactory.new.apply(
         this  
       )

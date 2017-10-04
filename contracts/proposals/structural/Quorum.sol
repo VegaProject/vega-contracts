@@ -1,6 +1,7 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.15;
 import "../Common.sol";
 import "../voting/StandardVote.sol";
+
 
 /**@title Quorum Proposal 
 * What: Quorum Proposals are used to establish the minimum amount of tokens needed to execute an proposal.
@@ -20,25 +21,22 @@ contract Quorum is Common {
 	*/
     function Quorum (
         uint _quorum,
-        address _vga,
-        bytes32 _name,
-        string _description,
+        address _vote,
         uint _duration               
 	)
     Common(
-        _name,
-        _description,
         _duration        
     )
     {
         quorum = _quorum;
-        vote = _vga;
+        vote = _vote;
     }
+
 
     /**
     * This function needs to handle any checks before the contract can be executed.
     * @dev Function used to cause the contract to execute.
     */
-    function execute() public {
+    function execute(address _vga) public{
     }
 }
