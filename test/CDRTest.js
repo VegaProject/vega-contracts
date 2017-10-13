@@ -9,14 +9,14 @@ const verbose = false;
 
 contract("Standard Vote", (accounts) => {
 
-    const CURRENT_VALUE_ONE = 700
-    const CURRENT_VALUE_TWO = 300
-    const STARTING_VALUE = 500
+    const CURRENT_VALUE_ONE = 7000000
+    const CURRENT_VALUE_TWO = 3000000
+    const STARTING_VALUE = 5000000
     const VEGA_PERIOD = 1
-    const STAKE_ONE = 10
-    const STAKE_TWO = -10
-    const TOTAL_REWARDS = 100
-    const TOKEN_CONVERSION = 10
+    const STAKE_ONE = 100000
+    const STAKE_TWO = -100000
+    const TOTAL_REWARDS = 1000000
+    const TOKEN_CONVERSION = 100000
     before(async() => {
       cdr = await CDRCalculator.new.apply(
         this  
