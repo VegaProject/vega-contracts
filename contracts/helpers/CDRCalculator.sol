@@ -17,7 +17,7 @@ contract CDRCalculator {
 
     /*
     * Used to get the ROD or return on decision based on the original and current values
-    * 
+    *
     * Thought of AS A PERCENT the rod value has 2 significant digits in it's "fractional part" ie %100.00 = 10000
     * @param _currentValue The current value of the decision or proposal
     * @param _startingValue The initial value of the decision or proposal
@@ -28,7 +28,7 @@ contract CDRCalculator {
 
     /*
     * Gets the compound vega period growth rate or CVPGR for a given rod and period
-    * 
+    *
     * @param _rod the return on decision
     * @param _vegaPeriods the current number of vega periods that have passed for this proposal
     */
@@ -43,7 +43,7 @@ contract CDRCalculator {
         // This is only in the rare case that a proposal actually
         // ends up having a negative value. Currently this should not happen
         // as a basic allocation can only lose the allocated value
-        // and has no implicated liabilities as somthing like 
+        // and has no implicated liabilities as somthing like
         // real-estate may.
         // More work on the actual formula workings must be handled for this case.
         cVPGR = int(absCVPGR);
@@ -53,24 +53,24 @@ contract CDRCalculator {
     }
 
     /*
-    * Used to calculate a reward given a stake the the current
-    * 
+    * Used to calculate a reward given a stake
+    *
     * @param _stake  The individuals stake in the proposal
     * @param _cVPGR The current cVPGR for the proposal
     */
     function reward(int _stake, int _cVPGR) public constant returns (int rewardV) {
-        rewardV = _stake * _cVPGR;
+        rewardV = (_stake / 10000) * _cVPGR;
     }
 
     /*
     * Calculates the token payout given the rewards as well as total rewards and the conversion rates
-    * 
+    *
     * @param _rewards The individual rewards
     * @param _absTotalRewards The total rewards
     * @param _tokenConversion The current rate of token conversion for this vega period
     */
     function tokens(int _rewards, uint _absTotalRewards, uint _tokenConversion) public constant returns (int tokenAdjustment) {
-        tokenAdjustment = _rewards * int(_tokenConversion) / int(_absTotalRewards);
+        tokenAdjustment = _rewards * int(_tokenConversion / 10000) / int(_absTotalRewards / 10000);
     }
 
     /*
@@ -112,6 +112,27 @@ contract CDRCalculator {
     */
     function rootStep(uint degree, uint base, uint x) internal constant returns (uint) {
         return ((degree-1)*x + base/x**(degree-1))/degree;
+    }
+
+    /*
+    * Calulator to update balance of depositor for a given proposal
+    *
+    * @param _balance The current balance of the voters tokens in the Deposited state
+    * @param _currentValue The current value of the decision or proposal
+    * @param _startingValue The starting value of the decision or proposal
+    * @param _stake The stake used to vote in the proposal
+    * @param _vegaPeriods The number of Vega Periods passed from the time the proposal was Approved or Denied
+    * @param _absTotalRewards The absolute value of all rewards in the given Vega Period
+    * @param _tokenConversion The current rate of token conversion for this vega period
+    */
+
+    function updateBalance(int _balance, int _currentValue, int _startingValue, int _stake, uint _vegaPeriods, uint _absTotalRewards, uint _tokenConversion) public constant returns (int) {
+        int rod = returnOnDecision(_currentValue, _startingValue);
+        int cvpgr = returnCVPGR(rod, _vegaPeriods);
+        int rwd = reward(_stake, cvpgr);
+        int num = tokens(rwd, _absTotalRewards, _tokenConversion);
+        int balance = _balance + num;
+        return balance;
     }
 
 }
