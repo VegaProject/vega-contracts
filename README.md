@@ -47,6 +47,7 @@ The token factory is used to handle the distribution of VegaToken which is a mod
 For more information on the basic types of Vega Contracts please see our technical specifications.
 
 ## Getting started
+**Note: Due to an issue with MiniMeToken compatability (our end not theirs) line 214 in the MiniMeToken contract must be commented out after install**
       git clone git@github.com:VegaProject/vega-contracts.git	
       cd vega-contracts				
       npm install			
