@@ -57,6 +57,8 @@ contract("Quorum", (accounts) => {
       quorum = await Quorum.new(
           60,
           vote.address,
+	  "New Quorum",
+	  "Here is why I think we should change the quorum",
           TIME_INCREMENT
       )
 

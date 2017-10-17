@@ -54,7 +54,9 @@ contract("Allocation", (accounts) => {
         ]
         )
         allocation = await Allocation.new(
-            TIME_INCREMENT,
+	    "Title goes here",
+            "this is the description of the proposal",
+	    TIME_INCREMENT,
             accounts[4],
             vega.address,
             TRANSFER_ONE,
