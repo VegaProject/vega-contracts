@@ -10,6 +10,8 @@ pragma solidity ^0.4.15;
 */
 contract Common {
     
+    bytes32 title;
+    string description;
     uint duration;
     uint startTime;
     enum ProposalStates { pending, failed, approved, denied }
@@ -19,8 +21,12 @@ contract Common {
     * @dev Main constructor for a Common proposal
     */
     function Common (
+	bytes32 _title,
+	string _description,
         uint _duration
     ) {
+	title = _title;
+	description = _description;
         duration = _duration;
         startTime = block.timestamp;
     }

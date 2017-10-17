@@ -14,7 +14,9 @@ contract Allocation is Financial {
 
 
       function Allocation(
-          uint _duration,
+	  bytes32 _title,
+          string _description,
+	  uint _duration,
           address _contract,
           address _token,
           uint _amount,
@@ -22,6 +24,8 @@ contract Allocation is Financial {
 	  address _oracle
   	)    
     Financial(
+	_title,
+	_description,
         _duration,
         _contract,
         _token,

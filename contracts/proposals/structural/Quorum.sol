@@ -22,9 +22,13 @@ contract Quorum is Common {
     function Quorum (
         uint _quorum,
         address _vote,
+	bytes32 _title,
+	string _description,
         uint _duration               
 	)
     Common(
+	_title,
+	_description,
         _duration        
     )
     {

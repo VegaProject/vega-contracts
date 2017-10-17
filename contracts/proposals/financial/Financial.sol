@@ -22,13 +22,17 @@ contract Financial is Common {
   	* @dev Main constructor for a Common proposal
   	*/
       function Financial(
-          uint _duration,
+          bytes32 _title,
+	  string _description,
+	  uint _duration,
           address _contract,
           address _token,
           uint256 _amount,
           address _vote
   	)    
     Common(
+	_title,
+	_description,
         _duration        
     ) {
         to = _contract;
