@@ -24,8 +24,8 @@ contract("Allocation", (accounts) => {
     const TRANSFER_TWO = 12345;
     const CAMPAIGN_CAP = 1000000;
 
-    let campaignDeployParams = 
-    (vault, token) => 
+    let campaignDeployParams =
+    (vault, token) =>
     [
         now,
         now + TIME_INCREMENT,
@@ -35,7 +35,7 @@ contract("Allocation", (accounts) => {
 
     before(async() => {
         factory = await MiniMeTokenFactory.new.apply(
-            this  
+            this
         )
         vega = await VegaToken.new.apply(
             this,
@@ -60,15 +60,16 @@ contract("Allocation", (accounts) => {
             accounts[4],
             vega.address,
             TRANSFER_ONE,
-            vote.address
+            vote.address,
+            "0xf358419c5b6dfe231b55fc78a62554ac12fb9238"
         )
 
     });
 
     it("should pass an execute an Allocation proposal", async () => {
         let senderOne = accounts[0]
-        let senderTwo = accounts[1]        
-        // Use balanceOfAt as current MiniMeToken does not support balance()        
+        let senderTwo = accounts[1]
+        // Use balanceOfAt as current MiniMeToken does not support balance()
         await vegaCampaign.sendTransaction({from: senderOne, value: TRANSFER_ONE})
         let valueOne = await vega.balanceOfAt(senderOne, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
         valueOne.toNumber().should.be.equal(TRANSFER_ONE)
@@ -87,9 +88,9 @@ contract("Allocation", (accounts) => {
         senderOneVoteInfo[2].toNumber().should.be.equal(valueOne.toNumber())
         let voteResult = await vote.isVotePassed()
         voteResult.should.be.true
-        await vega.executeFinancialProposal(allocation.address)        
+        await vega.executeFinancialProposal(allocation.address)
         let allocationValue = await vega.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
-        
+
         allocationValue.toNumber().should.be.equal(TRANSFER_ONE)
     })
 });
