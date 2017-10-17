@@ -18,7 +18,8 @@ contract Allocation is Financial {
           address _contract,
           address _token,
           uint _amount,
-          address _vote
+          address _vote,
+	  address _oracle
   	)    
     Financial(
         _duration,
