@@ -6,8 +6,6 @@ node_js:
 install:
 - npm install -g truffle ethereumjs-testrpc
 - npm install
-- truffle install
 
 script:
 - testrpc &> /dev/null & npm run test
-- npm run lint
