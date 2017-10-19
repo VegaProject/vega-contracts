@@ -7,7 +7,7 @@ let CDRCalculator = artifacts.require("CDRCalculator");
 
 const verbose = false;
 
-contract("Standard Vote", (accounts) => {
+contract("CDR Tests", (accounts) => {
 
     const CURRENT_VALUE_ONE = 700
     const CURRENT_VALUE_TWO = 300
@@ -25,14 +25,12 @@ contract("Standard Vote", (accounts) => {
 
     it("should calculate the rod", async () => {
         let rod = await (cdr.returnOnDecision.call(CURRENT_VALUE_ONE, STARTING_VALUE))
-        console.log("ROD:" + rod)
     })
 
 
     it("should calculate the cvpgr", async () => {
         let rod = await (cdr.returnOnDecision.call(CURRENT_VALUE_ONE, STARTING_VALUE))
         let cvpgr = await cdr.returnCVPGR.call(rod, VEGA_PERIOD)
-        console.log("CVPGR:" + cvpgr)        
         let reward = await cdr.reward.call(STAKE_ONE, cvpgr)
         let tokens_rewards = await cdr.tokens(reward, TOTAL_REWARDS, TOKEN_CONVERSION)
     })
@@ -42,7 +40,6 @@ contract("Standard Vote", (accounts) => {
         let rod = await (cdr.returnOnDecision.call(CURRENT_VALUE_ONE, STARTING_VALUE))
         let cvpgr = await cdr.returnCVPGR.call(rod, VEGA_PERIOD)
         let reward = await cdr.reward.call(STAKE_ONE, cvpgr)
-        console.log("CVPGR:" + cvpgr)        
         let tokens_rewards = await cdr.tokens(reward, TOTAL_REWARDS, TOKEN_CONVERSION)
     })
 
@@ -52,6 +49,5 @@ contract("Standard Vote", (accounts) => {
         let cvpgr = await cdr.returnCVPGR.call(rod, VEGA_PERIOD)
         let reward = await cdr.reward.call(STAKE_ONE, cvpgr)
         let tokenAdjustment = await cdr.tokens(reward, TOTAL_REWARDS, TOKEN_CONVERSION)
-        console.log("Token adjustment:" + tokenAdjustment)                
     })
 });
