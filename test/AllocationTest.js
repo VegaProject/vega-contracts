@@ -23,7 +23,10 @@ contract("Allocation", (accounts) => {
     const TRANSFER_ONE = 10000;
     const TRANSFER_TWO = 12345;
     const CAMPAIGN_CAP = 1000000;
-
+    let senderOne = accounts[0]
+    let senderTwo = accounts[1]
+    let valueOne, valueTwo, senderOneVoteIndex, senderOneVoteInfo, voteResult, allocationValue
+    
     let campaignDeployParams = 
     (vault, token) => 
     [
@@ -60,21 +63,19 @@ contract("Allocation", (accounts) => {
             TRANSFER_ONE,
             vote.address
         )
-
     });
 
     it("should let sender one donate to the vega campaign", async () => {
-        let senderOne = accounts[0]
-        let senderTwo = accounts[1]        
+       
         // Use balanceOfAt as current MiniMeToken does not support balance()        
         await vegaCampaign.sendTransaction({from: senderOne, value: TRANSFER_ONE})
-        let valueOne = await vega.balanceOfAt(senderOne, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
+        valueOne = await vega.balanceOfAt(senderOne, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
         valueOne.toNumber().should.be.equal(TRANSFER_ONE)
     })
     it("should let sender two donate to the vega campaign", async () => {    
         // Transfer tokens to second account
         await vegaCampaign.sendTransaction({from: senderTwo, value: TRANSFER_TWO})
-        let valueTwo = await vega.balanceOfAt(senderTwo, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
+        valueTwo = await vega.balanceOfAt(senderTwo, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
         valueTwo.toNumber().should.be.equal(TRANSFER_TWO)
     })
     it("should let sender one vote on the proposal", async () => {        
@@ -83,17 +84,17 @@ contract("Allocation", (accounts) => {
 
         await vega.transfer(vega.address, TRANSFER_ONE, {from: senderOne} )
 
-        let senderOneVoteIndex = await vote.statusMap(senderOne)
-        let senderOneVoteInfo = await vote.votes(senderOneVoteIndex[1].toNumber())
+        senderOneVoteIndex = await vote.statusMap(senderOne)
+        senderOneVoteInfo = await vote.votes(senderOneVoteIndex[1].toNumber())
         senderOneVoteInfo[2].toNumber().should.be.equal(valueOne.toNumber())
     })
     it("vote should pass", async () => {    
-        let voteResult = await vote.isVotePassed()
+        voteResult = await vote.isVotePassed()
         voteResult.should.be.true
     })
     it("proposal should execute", async () => {    
         await vega.executeFinancialProposal(allocation.address)        
-        let allocationValue = await vega.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
+        allocationValue = await vega.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
         
         allocationValue.toNumber().should.be.equal(TRANSFER_ONE)
     })
