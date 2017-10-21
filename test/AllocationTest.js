@@ -19,6 +19,9 @@ contract("Allocation", (accounts) => {
     let vegaCampaign;
     let vega, vote, quorum;
     let now = web3.eth.getBlock(web3.eth.blockNumber).timestamp;
+    const TITLE = "EQUITY SUBSCRIPTION AGREEMENT";
+    const DESCRIPTION = "THE AGREEMENT: https://gateway.ipfs.io/ipfs/QmVp1R6yEJARm6mrGTzSpU8Lo4QGk4ZQbxWMRcniUQJS4z";
+    const ORACLE = "0xf358419c5b6dfe231b55fc78a62554ac12fb9238";
     const TIME_INCREMENT = 10000;
     const TRANSFER_ONE = 10000;
     const TRANSFER_TWO = 12345;
@@ -54,19 +57,19 @@ contract("Allocation", (accounts) => {
         ]
         )
         allocation = await Allocation.new(
-	    "Title goes here",
-            "this is the description of the proposal",
-	    TIME_INCREMENT,
+    	      TITLE,
+            DESCRIPTION,
+	          TIME_INCREMENT,
             accounts[4],
             vega.address,
             TRANSFER_ONE,
             vote.address,
-            "0xf358419c5b6dfe231b55fc78a62554ac12fb9238"
+            ORACLE
         )
 
     });
 
-    it("should pass an execute an Allocation proposal", async () => {
+    it("should pass and execute an Allocation proposal", async () => {
         let senderOne = accounts[0]
         let senderTwo = accounts[1]
         // Use balanceOfAt as current MiniMeToken does not support balance()
@@ -92,5 +95,12 @@ contract("Allocation", (accounts) => {
         let allocationValue = await vega.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
 
         allocationValue.toNumber().should.be.equal(TRANSFER_ONE)
+        console.log("Title:" + TITLE)
+        console.log("Description:" + DESCRIPTION)
+        console.log("Duration:" + TIME_INCREMENT)
+        console.log("Contract:" +  accounts[4])
+        console.log("Token:" + vega.address)
+        console.log("Amount:" + TRANSFER_ONE)
+        console.log("Oracle:" + ORACLE)
     })
 });
