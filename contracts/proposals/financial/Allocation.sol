@@ -37,4 +37,10 @@ contract Allocation is Financial {
         MiniMeToken txToken = MiniMeToken(token);
         txToken.transferFrom(_vga, to, amount);
     }
+
+    function deposit(address _vga, uint _creatorsDeposit) {
+        MiniMeToken txToken = MiniMeToken(token);
+        txToken.transferFrom(_vga,, amount);
+    }
+
 }

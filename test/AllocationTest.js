@@ -7,7 +7,7 @@ let VegaToken = artifacts.require("VegaToken");
 let VegaCampaign = artifacts.require("VegaCampaign");
 let MiniMeTokenFactory = artifacts.require("MiniMeTokenFactory");
 let MiniMeToken = artifacts.require("MiniMeToken");
-let StandardVote = artifacts.require("StandardVote");
+let StakeVote = artifacts.require("StakeVote");
 let Allocation = artifacts.require("Allocation");
 
 
@@ -50,7 +50,7 @@ contract("Allocation", (accounts) => {
         )
         vega.changeController(vegaCampaign.address)
 
-        vote = await StandardVote.new.apply(
+        vote = await StakeVote.new.apply(
             this,
         [
             vega.address
