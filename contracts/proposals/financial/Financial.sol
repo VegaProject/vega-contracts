@@ -37,7 +37,8 @@ contract Financial is Common {
     {
         vote = _vote;
         Vote aVote = Vote(vote);
-        require(aVote.getWeight(msg.sender) / 10000 > (_amount));
+        // Deposit weight needs to be dynamic
+        require(aVote.getWeight(msg.sender) * 10000 > (_amount));
         to = _contract;
         token = _token;
         amount = _amount;
@@ -45,7 +46,6 @@ contract Financial is Common {
 
     function execute(address _vga) public;
 
-    function deposit(address _vga, uint _creatorsDeposit);
 
 
 }

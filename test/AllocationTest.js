@@ -56,6 +56,9 @@ contract("Allocation", (accounts) => {
             vega.address
         ]
         )
+        await vegaCampaign.sendTransaction({value: TRANSFER_ONE})        
+        await vega.approve(vote.address, TRANSFER_ONE)
+        await vote.vote(true)
         allocation = await Allocation.new(
             TIME_INCREMENT,
             accounts[4],
@@ -79,10 +82,13 @@ contract("Allocation", (accounts) => {
         valueTwo.toNumber().should.be.equal(TRANSFER_TWO)
     })
     it("should let sender one vote on the proposal", async () => {        
+        await vega.approve(vote.address, TRANSFER_ONE, {from: senderOne})        
         await vote.vote(true, {from: senderOne})
         await vote.countVote()
 
         await vega.transfer(vega.address, TRANSFER_ONE, {from: senderOne} )
+        let vegaHoldings = await vega.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
+        console.log(vegaHoldings.toNumber())
 
         senderOneVoteIndex = await vote.statusMap(senderOne)
         senderOneVoteInfo = await vote.votes(senderOneVoteIndex[1].toNumber())
