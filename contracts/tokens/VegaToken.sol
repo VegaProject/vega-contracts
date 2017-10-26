@@ -74,7 +74,8 @@ contract VegaToken is MiniMeToken {
       reportingEvent = proposal.reportingEvent();
       minDecisionExp = proposal.minDecisionExp();
       StandardTokenConversion sTC = StandardTokenConversion(proposal.tokenConversion());
-      tokenConversion = sTC.tokenConversion;
+      sTC.updateTokenConversion();
+      tokenConversion = sTC.tokenConversion();
       // if sTC.TokenConverion does not exist then do error checking and default the tokenConversion to 20% of the total supply.
     }
 
