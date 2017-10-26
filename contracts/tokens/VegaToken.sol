@@ -4,6 +4,7 @@ import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 import "../proposals/structural/Rewards.sol";
 import "../StandardInterfaces/StandardTokenConversion.sol";
 import "../proposals/structural/Quorum.sol";
+import "../StandardInterfaces/StandardQuorum.sol";
 import "../proposals/financial/Financial.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
@@ -62,6 +63,18 @@ contract VegaToken is MiniMeToken {
         require(!vote.voteApplied());
         vote.applyVote();
         quorum = proposal.quorum();
+    }
+
+    function executeQuorumAsAddress(address _address) {
+        Quorum proposal = Quorum(_address);
+        Vote vote = Vote(proposal.vote());
+        // Always update the quourum before checking a vote
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(!vote.voteApplied());
+        vote.applyVote();
+        StandardQuorum sO = StandardQuorum(proposal.oracle());
+        quorum = sO.quorum();
     }
 
     function executeRewards(address _address) {
