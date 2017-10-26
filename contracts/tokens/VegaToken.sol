@@ -6,13 +6,14 @@ import "../proposals/financial/Financial.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
 import "../proposals/voting/Vote.sol";
+import "../helpers/DynamicQuorum.sol";
 
 /// ::TODO::
 /// 1. Hadcoded functions (updateQuorum, updateMetric)
 /// need to be generalize to an updateStructure function
 ///
 /// 2. addressed used to updateStructure must be approved. This should be the only HARDCODED
-///    voting process. 
+///    voting process.
 contract VegaToken is MiniMeToken {
 
 
@@ -56,6 +57,12 @@ contract VegaToken is MiniMeToken {
         require(!vote.voteApplied());
         vote.applyVote();
         quorum = proposal.quorum();
+    }
+
+    function updateQuorum() {
+      // get data from proposals
+      // update the quorum by calling DynamicQuorum 'newData' & 'quorum'
+      // set quorum variable to value at DynamicQuorum 'currentQuorum'
     }
 
 
