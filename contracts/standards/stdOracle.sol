@@ -22,9 +22,7 @@ pragma solidity ^0.4.15;
 /// If the proposal.oracle contract does not meet this standard,
 /// then Vega will default to it's decentralized oracle.
 
-contract StandardOracle {
+contract stdOracle {
     uint public startingValue;
     uint public currentValue;
-    function updateCurrentValue() returns (bool success);
-    event UpdateCurrentValue();
 }

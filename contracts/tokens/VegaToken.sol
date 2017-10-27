@@ -2,13 +2,15 @@ pragma solidity ^0.4.15;
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 import "../proposals/structural/Rewards.sol";
-import "../StandardInterfaces/StandardTokenConversion.sol";
 import "../proposals/structural/Quorum.sol";
-import "../StandardInterfaces/StandardQuorum.sol";
 import "../proposals/financial/Financial.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
 import "../proposals/voting/Vote.sol";
+import "../standards/stdQuorum.sol";
+import "../standards/stdTokenConversion.sol";
+
+
 
 /// ::TODO::
 /// 1. Hadcoded functions (updateQuorum, updateMetric)
@@ -73,7 +75,7 @@ contract VegaToken is MiniMeToken {
         require(vote.isVotePassed());
         require(!vote.voteApplied());
         vote.applyVote();
-        StandardQuorum sO = StandardQuorum(proposal.oracle());
+        stdQuorum sO = stdQuorum(proposal.quorum());
         quorum = sO.quorum();
     }
 
@@ -86,7 +88,7 @@ contract VegaToken is MiniMeToken {
       vote.applyVote();
       reportingEvent = proposal.reportingEvent();
       minDecisionExp = proposal.minDecisionExp();
-      StandardTokenConversion sTC = StandardTokenConversion(proposal.tokenConversion());
+      stdTokenConversion sTC = stdTokenConversion(proposal.tokenConversion());
       sTC.updateTokenConversion();
       tokenConversion = sTC.tokenConversion();
       // if sTC.TokenConverion does not exist then do error checking and default the tokenConversion to 20% of the total supply.

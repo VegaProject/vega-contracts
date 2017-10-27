@@ -16,25 +16,12 @@ pragma solidity ^0.4.15;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/// @title InitTokenConversion
+/// @title StandardTokenConversion
 /// @author George K. Van Hoomissen
-/// @dev Initial contract to calculate tokenConversion.
+/// @dev This is the StandardTokenConversion interface for Vega.
+/// If the contract does not meet this standard,
+/// then Vega will default to a fixed TokenConverion rate of 20% of the totalSupply.
 
-contract StandardTokenConversion {
-    uint public tokenConversion;
-    function updateTokenConversion() returns (bool success);
-    event UpdateTokenConversion();
+contract stdQuorum {
+    uint public quorum;
 }
-
-contract InitTokenConversion is StandardTokenConversion {
-    function multiplyPercentage(uint _value, uint _numerator, uint _denominator) public constant returns (uint) {
-       uint value = (_value * _numerator) / _denominator;
-       return value;
-    }
-
-    uint totalSupply = 1000000000000;
-
-    function updateTokenConversion() returns (bool success) {
-       tokenConversion = multiplyPercentage(totalSupply, 100, 500);
-       return true;
-  }

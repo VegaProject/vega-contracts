@@ -20,11 +20,9 @@ pragma solidity ^0.4.15;
 /// @author George K. Van Hoomissen
 /// @dev This contract dynamically generates a voting quorum, based on staking participation levels.
 
-contract StandardQuorum {
-    uint public quorum;
-}
+import "../standards/stdQuorum.sol";
 
-contract DynamicQuorum is StandardQuorum {
+contract DynamicQuorum is stdQuorum {
 
     // currentQuorum is the required quorum at the currnet Vega Period.
     // avgAbsStakePerVegaPeriod is the average of the absolute value of all proposal stakes in a given Vega Period.

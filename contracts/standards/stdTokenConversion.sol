@@ -22,6 +22,6 @@ pragma solidity ^0.4.15;
 /// If the contract does not meet this standard,
 /// then Vega will default to a fixed TokenConverion rate of 20% of the totalSupply.
 
-contract StandardQuorum {
-    uint public quorum;
+contract stdTokenConversion {
+    uint public tokenConversion;
 }
