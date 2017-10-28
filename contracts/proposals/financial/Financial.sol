@@ -5,7 +5,7 @@ import "../Common.sol";
 import "../../../node_modules/zeppelin-solidity/contracts/token/ERC20Basic.sol";
 
 import "../voting/Vote.sol";
-
+import {Vault} from "../../../node_modules/vaultcontract/contracts/Vault.sol";
 
 /**@title Allocation Proposal
 * Allocation proposals send tokens held by Vega to another contract or address. This contract could be a token sale,
@@ -20,7 +20,7 @@ contract Financial is Common {
       uint256 public amount;
       // Vote is stored in this token so that contracts with knowledge of this proposal can check it's vote state.
       address public vote;
-
+      uint idPayment;
   	/**
   	* @dev Main constructor for a Common proposal
   	*/
@@ -46,6 +46,7 @@ contract Financial is Common {
 
     function execute(address _vga) public;
 
-
-
+    function setPaymentId(uint _idPayment){
+      idPayment = _idPayment;
+    }
 }

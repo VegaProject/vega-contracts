@@ -7,9 +7,10 @@ let VegaToken = artifacts.require("VegaToken");
 let VegaCampaign = artifacts.require("VegaCampaign");
 let MiniMeTokenFactory = artifacts.require("MiniMeTokenFactory");
 let MiniMeToken = artifacts.require("MiniMeToken");
+
 let StakeVote = artifacts.require("StakeVote");
 let Allocation = artifacts.require("Allocation");
-
+let Vault = artifacts.require("Vault")
 
 const verbose = false;
 
@@ -36,7 +37,42 @@ contract("Allocation", (accounts) => {
         token
     ]
 
+    let vaultDeployParams = 
+    (caller, destination, minLockTime, timeLock, guard, guardDelay) => 
+    [
+        caller,
+        destination,
+        minLockTime,
+        timeLock,
+        guard,
+        guardDelay
+    ]
+
     before(async() => {
+
+        vault = await Vault.new.apply(
+            this,
+            vaultDeployParams(
+                accounts[0],
+                accounts[1],
+                0,
+                0,
+                accounts[1],
+                0
+                )
+        )
+
+        vault2 = await Vault.new.apply(
+            this,
+            vaultDeployParams(
+                accounts[0],
+                accounts[1],
+                0,
+                0,
+                accounts[1],
+                0
+                )
+        )
         factory = await MiniMeTokenFactory.new.apply(
             this  
         )
@@ -44,11 +80,24 @@ contract("Allocation", (accounts) => {
             this,
             [factory.address]
         )
+
+        vega2 = await VegaToken.new.apply(
+            this,
+            [factory.address]
+        )
+
         vegaCampaign = await VegaCampaign.new.apply(
             this,
-            campaignDeployParams(accounts[0], vega.address)
+            campaignDeployParams(vault.address, vega.address)
         )
+
+        vegaCampaign2 = await VegaCampaign.new.apply(
+            this,
+            campaignDeployParams(vault2.address, vega2.address)
+        )
+
         vega.changeController(vegaCampaign.address)
+        vega2.changeController(vegaCampaign2.address)    
 
         vote = await StakeVote.new.apply(
             this,
@@ -62,7 +111,7 @@ contract("Allocation", (accounts) => {
         allocation = await Allocation.new(
             TIME_INCREMENT,
             accounts[4],
-            vega.address,
+            vega2.address,
             TRANSFER_ONE,
             vote.address
         )
@@ -75,6 +124,15 @@ contract("Allocation", (accounts) => {
         valueOne = await vega.balanceOfAt(senderOne, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
         valueOne.toNumber().should.be.equal(TRANSFER_ONE)
     })
+
+    it("should let sender one donate to the vega campaign2", async () => {
+       
+        // Use balanceOfAt as current MiniMeToken does not support balance()        
+        await vegaCampaign2.sendTransaction({from: senderOne, value: (TRANSFER_ONE)})
+        valueOne = await vega2.balanceOfAt(senderOne, web3.eth.getBlock(web3.eth.blockNumber).timestamp)
+        valueOne.toNumber().should.be.equal(TRANSFER_ONE)
+    })
+
     it("should let sender two donate to the vega campaign", async () => {    
         // Transfer tokens to second account
         await vegaCampaign.sendTransaction({from: senderTwo, value: TRANSFER_TWO})
@@ -86,9 +144,8 @@ contract("Allocation", (accounts) => {
         await vote.vote(true, {from: senderOne})
         await vote.countVote()
 
-        await vega.transfer(vega.address, TRANSFER_ONE, {from: senderOne} )
-        let vegaHoldings = await vega.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
-        console.log(vegaHoldings.toNumber())
+
+        await vega2.transfer(vega.address, TRANSFER_ONE, {from: senderOne} )
 
         senderOneVoteIndex = await vote.statusMap(senderOne)
         senderOneVoteInfo = await vote.votes(senderOneVoteIndex[1].toNumber())
@@ -100,8 +157,7 @@ contract("Allocation", (accounts) => {
     })
     it("proposal should execute", async () => {    
         await vega.executeFinancialProposal(allocation.address)        
-        allocationValue = await vega.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
-        
+        allocationValue = await vega2.balanceOfAt(accounts[4], web3.eth.getBlock(web3.eth.blockNumber).timestamp)
         allocationValue.toNumber().should.be.equal(TRANSFER_ONE)
     })
 });

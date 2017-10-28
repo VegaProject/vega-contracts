@@ -17,7 +17,7 @@ pragma solidity ^0.4.15;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/// @author Jordi Baylina, Arthur Lunn
+/// @author Arthur Lunn (Adapted from code from Jordi Baylina)
 /// @dev This contract controls the issuance of tokens for the VegaToken Contract.
 /// Going forward this contract needs to be modified to adhear to the VegaToken campaign parameters. 
 
@@ -29,7 +29,6 @@ import "../helpers/Owned.sol";
 /// @dev This is designed to control the issuance of a MiniMe Token for a
 ///  non-profit Campaign. This contract effectively dictates the terms of the
 ///  funding round. This campaign is designed to be no-limit; there is no maximum funding.
-
 contract VegaCampaign is TokenController, Owned {
 
     uint public startFundingTime;       // In UNIX Time Format
