@@ -2,6 +2,7 @@ pragma solidity ^0.4.15;
 
 import "../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 import "../proposals/structural/Quorum.sol";
+import "../proposals/structural/Time.sol";
 import "../proposals/financial/Financial.sol";
 import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
@@ -14,7 +15,7 @@ import "../proposals/voting/Vote.sol";
 /// need to be generalize to an updateStructure function
 ///
 /// 2. addressed used to updateStructure must be approved. This should be the only HARDCODED
-///    voting process. 
+///    voting process.
 contract VegaToken is MiniMeToken {
 
 
@@ -34,6 +35,7 @@ contract VegaToken is MiniMeToken {
     }
 
     uint public quorum = 100;
+    int public time = 100;
 
     function executeFinancialProposal(address _address) {
         Financial proposal = Financial(_address);
@@ -60,5 +62,15 @@ contract VegaToken is MiniMeToken {
         quorum = proposal.quorum();
     }
 
+    function executeTime(address _address) {
+        Time proposal = Time(_address);
+        Vote vote = Vote(proposal.vote());
+        // Always update the quourum before checking a vote
+        vote.updateQuorum(quorum);
+        require(vote.isVotePassed());
+        require(!vote.voteApplied());
+        vote.applyVote();
+        time = proposal.time();
+    }
 
 }
