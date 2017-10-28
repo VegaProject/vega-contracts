@@ -37,4 +37,6 @@ contract Allocation is Financial {
         MiniMeToken txToken = MiniMeToken(token);
         txToken.transferFrom(_vga, to, amount);
     }
+
+
 }

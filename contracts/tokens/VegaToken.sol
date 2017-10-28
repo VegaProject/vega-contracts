@@ -7,6 +7,8 @@ import "../proposals/voting/StandardVote.sol";
 import "../proposals/voting/StakeVote.sol";
 import "../proposals/voting/Vote.sol";
 
+
+
 /// ::TODO::
 /// 1. Hadcoded functions (updateQuorum, updateMetric)
 /// need to be generalize to an updateStructure function
