@@ -21,6 +21,8 @@ contract Financial is Common {
       // Vote is stored in this token so that contracts with knowledge of this proposal can check it's vote state.
       address public vote;
       uint idPayment;
+      address public creator;
+
   	/**
   	* @dev Main constructor for a Common proposal
   	*/
@@ -30,7 +32,7 @@ contract Financial is Common {
           address _token,
           uint256 _amount,
           address _vote
-  	)    
+    	)    
     Common(
         _duration        
     ) 
@@ -42,6 +44,7 @@ contract Financial is Common {
         to = _contract;
         token = _token;
         amount = _amount;
+        creator = msg.sender;
     }
 
     function execute(address _vga) public;
