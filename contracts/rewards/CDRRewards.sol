@@ -7,11 +7,13 @@ contract CDRRewards {
 	int startingValue;
 	int currentValue;
 	uint startingTime;
+	uint vegaPeriod;
 	Vote vote;
 	address creator;
 
 	function CDRRewards (
 		int _startingValue,
+		uint _vegaPeriod,
 		address _vote,
 		address _creator
 	) {
@@ -28,7 +30,7 @@ contract CDRRewards {
 
 
 	function getVegaPeriod() internal returns(uint vegaPeriods){
-		timeRemainder = (now - startingTime) % vegaPeriod;
+		uint timeRemainder = (now - startingTime) % vegaPeriod;
 		vegaPeriods = (now - startingTime - timeRemainder) / vegaPeriod;
 	}
 
