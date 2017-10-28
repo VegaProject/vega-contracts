@@ -61,4 +61,8 @@ contract Vote is Owned {
     function applyVote() public onlyOwner {
         voteApplied = true;
     }
+
+    function getWeight(address _addr) public constant returns(uint weight) {
+         weight = votes[statusMap[_addr].voteIndex].weight;
+    }
 }

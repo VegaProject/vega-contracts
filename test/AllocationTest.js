@@ -7,8 +7,9 @@ let VegaToken = artifacts.require("VegaToken");
 let VegaCampaign = artifacts.require("VegaCampaign");
 let MiniMeTokenFactory = artifacts.require("MiniMeTokenFactory");
 let MiniMeToken = artifacts.require("MiniMeToken");
-let StandardVote = artifacts.require("StandardVote")
-let Allocation = artifacts.require("Allocation")
+
+let StakeVote = artifacts.require("StakeVote");
+let Allocation = artifacts.require("Allocation");
 let Vault = artifacts.require("Vault")
 
 const verbose = false;
@@ -98,12 +99,15 @@ contract("Allocation", (accounts) => {
         vega.changeController(vegaCampaign.address)
         vega2.changeController(vegaCampaign2.address)    
 
-        vote = await StandardVote.new.apply(
+        vote = await StakeVote.new.apply(
             this,
         [
             vega.address
         ]
         )
+        await vegaCampaign.sendTransaction({value: TRANSFER_ONE})        
+        await vega.approve(vote.address, TRANSFER_ONE)
+        await vote.vote(true)
         allocation = await Allocation.new(
             TIME_INCREMENT,
             accounts[4],
@@ -136,8 +140,10 @@ contract("Allocation", (accounts) => {
         valueTwo.toNumber().should.be.equal(TRANSFER_TWO)
     })
     it("should let sender one vote on the proposal", async () => {        
+        await vega.approve(vote.address, TRANSFER_ONE, {from: senderOne})        
         await vote.vote(true, {from: senderOne})
         await vote.countVote()
+
 
         await vega2.transfer(vega.address, TRANSFER_ONE, {from: senderOne} )
 

@@ -1,7 +1,10 @@
 pragma solidity ^0.4.15;
+
 import "../Common.sol";
 
 import "../../../node_modules/zeppelin-solidity/contracts/token/ERC20Basic.sol";
+
+import "../voting/Vote.sol";
 import {Vault} from "../../../node_modules/vaultcontract/contracts/Vault.sol";
 
 /**@title Allocation Proposal
@@ -21,7 +24,7 @@ contract Financial is Common {
   	/**
   	* @dev Main constructor for a Common proposal
   	*/
-      function Financial(
+      function Financial (
           uint _duration,
           address _contract,
           address _token,
@@ -30,11 +33,15 @@ contract Financial is Common {
   	)    
     Common(
         _duration        
-    ) {
+    ) 
+    {
+        vote = _vote;
+        Vote aVote = Vote(vote);
+        // Deposit weight needs to be dynamic
+        require(aVote.getWeight(msg.sender) * 10000 > (_amount));
         to = _contract;
         token = _token;
         amount = _amount;
-        vote = _vote;
     }
 
     function execute(address _vga) public;
