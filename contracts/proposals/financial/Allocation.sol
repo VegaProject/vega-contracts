@@ -3,6 +3,8 @@ import "../Common.sol";
 
 import "../../../node_modules/minimetoken/contracts/MiniMeToken.sol";
 import "./Financial.sol";
+import ""
+
 
 /**@title Allocation Proposal
 * Allocation proposals send tokens held by Vega to another contract or address. This contract could be a token sale,
@@ -36,6 +38,7 @@ contract Allocation is Financial {
     function execute(address _vga) public {
         MiniMeToken txToken = MiniMeToken(token);
         txToken.transferFrom(_vga, to, amount);
+
     }
 
 
