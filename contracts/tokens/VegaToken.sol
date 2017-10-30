@@ -37,6 +37,9 @@ contract VegaToken is MiniMeToken {
     uint public quorum = 100;
     int public time = 100;
 
+    uint public ABS_TOTAL_TOKEN_REWARDS = 10000;
+    uint public TOKEN_CONVERSION = 200;
+
     function executeFinancialProposal(address _address) {
         Financial proposal = Financial(_address);
         Vote vote = Vote(proposal.vote());
@@ -72,5 +75,7 @@ contract VegaToken is MiniMeToken {
         vote.applyVote();
         time = proposal.time();
     }
+
+
 
 }

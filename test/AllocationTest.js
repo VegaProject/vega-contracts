@@ -117,7 +117,9 @@ contract("Allocation", (accounts) => {
             accounts[4],
             vega2.address,
             TRANSFER_ONE,
-            vote.address
+            vote.address,
+            100,
+            60
         )
     });
 

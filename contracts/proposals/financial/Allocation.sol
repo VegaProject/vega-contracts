@@ -18,14 +18,18 @@ contract Allocation is Financial {
           address _contract,
           address _token,
           uint _amount,
-          address _vote
-  	)    
+          address _vote,
+          int _startingValue,
+          uint _vegaPeriod
+  	)
     Financial(
         _duration,
         _contract,
         _token,
         _amount,
-        _vote
+        _vote,
+        _startingValue,
+        _vegaPeriod
     ){}
 
     /**
